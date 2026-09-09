@@ -1,0 +1,30 @@
+{
+  "name": "falmouth-after-five",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --host 127.0.0.1",
+    "test": "node --test tests/*.test.mjs && php tests/domain.php",
+    "package": "npm run build && php scripts/package.php",
+    "test:http": "node tests/http.mjs",
+    "preview": "php -S 127.0.0.1:8787 -t public scripts/router.php",
+    "check:php": "node scripts/lint-php.mjs",
+    "test:package": "node tests/package.mjs",
+    "format": "prettier --write src scripts/*.mjs tests/*.mjs vite.config.js package.json index.html README.md docs/*.md"
+  },
+  "dependencies": {
+    "@fontsource/outfit": "^5.0.0",
+    "@phosphor-icons/react": "^2.1.7",
+    "mapbox-gl": "^3.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "prettier": "^3.9.6",
+    "vite": "^7.0.0"
+  }
+}

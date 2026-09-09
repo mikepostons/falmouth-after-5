@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+node_modules/
+private/
+dist/
+release/
+.DS_Store
+public/uploads/*
+!public/uploads/.htaccess
+!public/uploads/.gitkeep
+public/build/
