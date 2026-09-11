@@ -1,0 +1,1326 @@
+/* Version two: the town is the canvas. Scoped to preserve the original site. */
+.app-explorer {
+  position: fixed;
+  inset: 0;
+  height: 100dvh;
+  overflow: hidden;
+  color: #123c56;
+  --app-shadow: 0 8px 32px #133a5420;
+}
+.app-map-background,
+.app-map-background .map-shell {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+.floating-surface {
+  background: #fffffff5;
+  border: 1px solid #fff;
+  box-shadow: var(--app-shadow);
+  border-radius: 0;
+}
+.app-brand {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 22px 14px 14px;
+  width: 370px;
+}
+.app-brand .brand-button {
+  padding: 0;
+  flex-shrink: 0;
+}
+.app-brand img {
+  width: 87px;
+  height: 67px;
+  object-fit: contain;
+}
+.app-brand > div {
+  display: grid;
+  gap: 4px;
+}
+.app-kicker {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: #607985;
+  margin: 0;
+}
+.app-brand strong {
+  font-size: 18px;
+  font-weight: 600;
+}
+.app-brand > div > span:last-child {
+  font-size: 11px;
+  color: #607985;
+}
+.app-search-tools {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  padding: 9px 15px;
+  gap: 16px;
+  max-width: calc(100% - 442px);
+  border-radius: 16px;
+}
+.app-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.app-search input {
+  border: 0;
+  background: transparent;
+  outline-offset: 3px;
+  width: 220px;
+  padding: 8px 0;
+  min-width: 0;
+  font-size: 14px;
+}
+.app-search button {
+  display: flex;
+  background: transparent;
+  padding: 5px;
+}
+.app-date {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-left: 1px solid #dce5e9;
+  padding-left: 15px;
+}
+.app-date select {
+  border: 0;
+  background: transparent;
+  color: #16445d;
+  font-size: 13px;
+  max-width: 180px;
+  padding: 8px 0;
+}
+.app-map-background .map-tools {
+  left: auto;
+  right: 24px;
+  top: 100px;
+}
+.app-map-background .map-tools button {
+  border-radius: 12px;
+  padding: 12px;
+}
+.app-map-background .mapboxgl-ctrl-bottom-right {
+  bottom: 106px;
+  right: 16px;
+}
+.app-map-background .mapboxgl-ctrl-attrib {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  max-width: calc(100vw - 105px);
+  font-size: 10px;
+}
+.app-map-background .mapboxgl-ctrl-logo {
+  margin-bottom: 3px;
+}
+.app-dock {
+  position: absolute;
+  right: 24px;
+  bottom: 42px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.app-filter-trigger {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 60px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.app-filter-trigger > span {
+  background: #004b91;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 11px;
+}
+.app-view-switch {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 20px;
+}
+.app-view-switch button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 14px;
+  padding: 14px 20px;
+  background: transparent;
+  color: #315266;
+  font-size: 14px;
+}
+.app-view-switch .active {
+  background: #004b91;
+  color: white;
+  box-shadow: 0 3px 9px #004b9125;
+}
+.app-map-caption {
+  position: absolute;
+  bottom: 48px;
+  left: 24px;
+  padding: 13px 18px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 14px;
+}
+.app-live-dot {
+  width: 7px;
+  height: 7px;
+  background: #006da0;
+  border-radius: 50%;
+}
+.app-demo {
+  position: absolute;
+  bottom: 25px;
+  left: 24px;
+  font-size: 10px;
+  background: #ffffffdf;
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: #355569;
+}
+.app-info-button {
+  position: absolute;
+  right: 24px;
+  top: 157px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-weight: 600;
+}
+.app-offers {
+  position: absolute;
+  top: 136px;
+  bottom: 111px;
+  left: 24px;
+  width: 370px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: app-reveal 0.24s ease-out;
+}
+.app-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 23px 20px 17px;
+  border-bottom: 1px solid #e5ecef;
+}
+.app-panel-heading h1 {
+  font-size: 24px;
+  line-height: 1.12;
+  margin: 8px 0;
+  letter-spacing: -0.7px;
+}
+.app-panel-heading p:last-child {
+  font-size: 12px;
+  color: #607985;
+  margin: 0;
+}
+.app-panel-heading .icon-button {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+.app-offer-scroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 17px 16px;
+}
+.app-offer {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  padding: 19px 0;
+  border-bottom: 1px solid #e5ecef;
+  color: inherit;
+}
+.app-offer:last-child {
+  border-bottom: 0;
+}
+.app-offer:hover .app-offer-copy > strong {
+  color: #0065aa;
+}
+.app-offer-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--cat) 12%, white);
+  color: var(--cat);
+  overflow: hidden;
+}
+.app-offer-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.app-offer-copy {
+  display: grid;
+  gap: 6px;
+  flex: 1;
+}
+.app-venue {
+  font-size: 11px;
+  color: #607985;
+}
+.app-offer-copy > strong {
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 500;
+}
+.app-offer-meta {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.app-offer-meta > span {
+  display: flex;
+}
+.app-offer-meta > span:last-child {
+  font-size: 10px;
+  color: #607985;
+  margin-left: 4px;
+}
+.app-clear {
+  font-size: 12px;
+  margin-top: 14px;
+}
+.app-empty {
+  text-align: center;
+  padding: 35px 12px;
+}
+.app-empty h2 {
+  font-size: 23px;
+  margin: 15px 0;
+}
+.app-empty p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.app-filter-popover {
+  position: fixed;
+  inset: auto 24px 116px auto;
+  margin: 0;
+  width: 340px;
+  max-height: calc(100dvh - 150px);
+  overflow: auto;
+  padding: 22px;
+  color: #123c56;
+}
+.app-filter-popover::backdrop {
+  background: transparent;
+}
+.app-filter-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+.app-filter-heading h2 {
+  font-size: 23px;
+  margin: 7px 0;
+  letter-spacing: -0.5px;
+}
+.app-filter-heading .icon-button {
+  width: 30px;
+  height: 30px;
+}
+.app-filter-popover > p {
+  font-size: 12px;
+  color: #607985;
+  margin: 4px 0 20px;
+}
+.app-category-options {
+  display: grid;
+  gap: 6px;
+}
+.app-category-options > button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 11px 12px;
+  border: 1px solid #e3eaee;
+  background: white;
+  border-radius: 12px;
+  color: #294f65;
+}
+.app-category-options > button > span:nth-child(2) {
+  flex: 1;
+}
+.app-category-options > button.selected {
+  border-color: #004b91;
+  background: #edf5fa;
+}
+.app-category-icon {
+  color: var(--cat);
+  display: flex;
+}
+.app-filter-done {
+  width: 100%;
+  margin-top: 18px;
+  justify-content: space-between;
+}
+.app-about {
+  position: absolute;
+  top: 136px;
+  left: 24px;
+  width: 370px;
+  padding: 28px;
+  z-index: 4;
+  max-height: calc(100dvh - 240px);
+  overflow: auto;
+}
+.app-about > .icon-button {
+  float: right;
+}
+.app-about h1 {
+  font-size: 34px;
+  line-height: 1.1;
+  margin: 16px 0;
+}
+.app-about > p:not(.eyebrow) {
+  font-size: 15px;
+  line-height: 1.6;
+}
+.app-about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  border-top: 1px solid #dce5e9;
+  margin-top: 20px;
+  padding-top: 18px;
+  font-size: 11px;
+}
+.app-about-links button {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+.app-refresh-error {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff3ce;
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+.app-refresh-error button {
+  background: transparent;
+  text-decoration: underline;
+}
+@keyframes app-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .app-search-tools {
+    width: 310px;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .app-search {
+    width: 100%;
+  }
+  .app-search input {
+    width: 100%;
+  }
+  .app-date {
+    border-left: 0;
+    border-top: 1px solid #e5ecef;
+    width: 100%;
+    padding: 2px 0 0;
+  }
+  .app-map-background .map-tools {
+    top: 145px;
+  }
+  .app-info-button {
+    top: 201px;
+  }
+}
+@media (max-width: 760px) {
+  .app-brand {
+    top: max(12px, env(safe-area-inset-top));
+    left: 12px;
+    width: auto;
+    padding: 8px 12px;
+    gap: 10px;
+    border-radius: 16px;
+  }
+  .app-brand img {
+    width: 62px;
+    height: 46px;
+  }
+  .app-brand strong {
+    font-size: 15px;
+  }
+  .app-brand .app-kicker {
+    font-size: 8px;
+  }
+  .app-brand > div > span:last-child {
+    font-size: 9px;
+  }
+  .app-search-tools {
+    top: 87px;
+    left: 12px;
+    right: 12px;
+    max-width: none;
+    padding: 6px 12px;
+    gap: 8px;
+  }
+  .app-search {
+    flex: 1;
+  }
+  .app-search input {
+    width: 100%;
+    font-size: 12px;
+  }
+  .app-date {
+    padding-left: 8px;
+    gap: 5px;
+  }
+  .app-date select {
+    font-size: 11px;
+    max-width: 120px;
+  }
+  .app-date > svg {
+    display: none;
+  }
+  .app-map-background .map-tools {
+    top: 146px;
+    right: 12px;
+    gap: 5px;
+  }
+  .app-map-background .map-tools button {
+    font-size: 10px;
+    padding: 9px;
+  }
+  .app-map-background .mapboxgl-ctrl-bottom-right {
+    right: 5px;
+    bottom: 118px;
+  }
+  .app-info-button {
+    top: 25px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+  }
+  .app-dock {
+    bottom: calc(38px + env(safe-area-inset-bottom));
+    right: 12px;
+    left: 12px;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .app-filter-trigger {
+    height: 54px;
+    padding: 0 15px;
+  }
+  .app-view-switch {
+    padding: 5px;
+    border-radius: 18px;
+  }
+  .app-view-switch button {
+    padding: 12px 15px;
+  }
+  .app-map-caption {
+    bottom: calc(104px + env(safe-area-inset-bottom));
+    left: 12px;
+    font-size: 11px;
+    padding: 10px 12px;
+    max-width: calc(100% - 66px);
+  }
+  .app-demo {
+    left: 12px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    font-size: 8px;
+  }
+  .app-offers {
+    top: auto;
+    bottom: calc(101px + env(safe-area-inset-bottom));
+    left: 12px;
+    right: 12px;
+    width: auto;
+    height: 49dvh;
+    max-height: calc(100dvh - 265px);
+    border-radius: 23px;
+    z-index: 2;
+  }
+  .app-offers ~ .app-map-caption {
+    display: none;
+  }
+  .app-panel-heading {
+    padding: 16px 18px 12px;
+  }
+  .app-panel-heading h1 {
+    font-size: 22px;
+    margin: 5px 0;
+  }
+  .app-panel-heading .app-kicker {
+    font-size: 9px;
+  }
+  .app-offer {
+    padding: 14px 0;
+  }
+  .app-offer-visual {
+    width: 52px;
+    height: 60px;
+  }
+  .app-offer-copy > strong {
+    font-size: 15px;
+  }
+  .app-filter-popover {
+    right: 12px;
+    left: 12px;
+    bottom: calc(102px + env(safe-area-inset-bottom));
+    width: auto;
+    max-height: calc(100dvh - 160px);
+    padding: 18px;
+  }
+  .app-about {
+    top: 145px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-height: calc(100dvh - 250px);
+  }
+  .app-refresh-error {
+    top: 133px;
+    width: 85%;
+    z-index: 5;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-offers {
+    animation: none;
+  }
+}
+/* Keep Mapbox controls and loading overlays inside the background layer. */
+.app-map-background {
+  isolation: isolate;
+  z-index: 0;
+}
+/* Simplified map chrome and image-led offer details. */
+.app-brand {
+  width: auto;
+  padding: 16px 20px;
+}
+.app-brand img {
+  width: 185px;
+  height: auto;
+  display: block;
+}
+.app-filter-popover {
+  padding: 14px;
+  width: 280px;
+  background: white;
+}
+.app-settings-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 12px;
+  border-top: 1px solid #e3eaee;
+  padding: 16px 12px 4px;
+  background: transparent;
+  color: #315266;
+  font-size: 13px;
+}
+.app-map-settings {
+  display: grid;
+  gap: 12px;
+}
+.app-map-settings .app-view-switch {
+  justify-content: center;
+  box-shadow: none;
+}
+.app-map-settings .button {
+  justify-content: center;
+}
+.app-offer-detail {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.app-offer-detail .detail-body {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 32px;
+  min-width: 0;
+}
+.app-detail-media {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 100%;
+  background: #e7eff3;
+  overflow: hidden;
+}
+.app-detail-media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.app-detail-placeholder {
+  height: 100%;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px;
+  text-align: center;
+  color: #004b91;
+  background: linear-gradient(155deg, #e0eef3, #f5e9f0);
+}
+.app-detail-placeholder > span {
+  font-size: 24px;
+  line-height: 1.15;
+  font-weight: 600;
+}
+.app-detail-placeholder > small {
+  font-size: 11px;
+  color: #597483;
+}
+.app-offer-detail .category-pills {
+  gap: 10px;
+}
+.app-offer-detail .category-pills > span {
+  font-size: 15px;
+  padding: 9px 12px;
+  gap: 8px;
+}
+.app-offer-detail .category-pills svg {
+  width: 23px;
+  height: 23px;
+}
+@media (max-width: 760px) {
+  .app-brand {
+    padding: 12px 16px;
+  }
+  .app-brand img {
+    width: 145px;
+    height: auto;
+  }
+  .app-filter-popover {
+    width: auto;
+  }
+  .app-offer-detail {
+    display: flex;
+    flex-direction: column;
+  }
+  .app-detail-media {
+    height: 28dvh;
+    min-height: 180px;
+    max-height: 280px;
+    flex-shrink: 0;
+  }
+  .app-detail-placeholder {
+    min-height: 100%;
+    gap: 12px;
+  }
+  .app-detail-placeholder > svg {
+    width: 50px;
+    height: 50px;
+  }
+  .app-offer-detail .detail-body {
+    padding: 26px;
+  }
+}
+/* A compact brand-blue ring, with a white separator on filled controls. */
+.app-explorer button:focus-visible,
+.app-explorer a:focus-visible,
+dialog button:focus-visible,
+dialog a:focus-visible {
+  outline: 2px solid #0075bd;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px white;
+}
+.app-search input:focus-visible {
+  outline: 0;
+}
+.app-search:focus-within {
+  outline: 2px solid #0075bd;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+/* Split campaign lockup: clear logo, handwritten evening invitation. */
+.app-brand {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+  align-items: stretch;
+  background: white;
+  border: 0;
+}
+.app-brand .brand-button {
+  padding: 16px 20px;
+  background: white;
+  display: flex;
+  align-items: center;
+}
+.app-brand .brand-button:focus-visible {
+  outline-offset: -5px;
+  box-shadow: none;
+}
+.app-brand-tagline {
+  margin: 0;
+  width: 190px;
+  background: #263d4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  color: #fff;
+}
+.app-brand-tagline > span {
+  display: block;
+  font-family: "Yellowtail", cursive;
+  font-size: 27px;
+  line-height: 1.02;
+  font-weight: 400;
+  text-align: center;
+  transform: rotate(-8deg);
+}
+@media (min-width: 761px) {
+  .app-offers,
+  .app-about {
+    top: 160px;
+  }
+}
+@media (max-width: 760px) {
+  .app-brand-tagline {
+    display: none;
+  }
+  .app-brand .brand-button {
+    padding: 10px 14px;
+  }
+  .app-brand img {
+    width: 130px;
+  }
+  .app-search-tools {
+    top: 96px;
+  }
+}
+@media (min-width: 761px) {
+  .app-search-tools {
+    max-width: calc(100% - 474px);
+  }
+}
+
+/* A full-height drawer shares the viewport with the map. */
+.app-explorer {
+  --sidebar-width: clamp(360px, 34vw, 464px);
+}
+.app-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 5;
+  pointer-events: none;
+}
+.app-header .app-brand,
+.app-header-switch {
+  pointer-events: auto;
+}
+.app-header-switch {
+  display: none;
+}
+.app-map-background {
+  left: 0;
+  width: 100%;
+  transition:
+    left 280ms ease,
+    width 280ms ease;
+}
+.is-list .app-map-background {
+  left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
+}
+.app-offers {
+  inset: 0 auto 0 0;
+  width: var(--sidebar-width);
+  height: 100%;
+  max-height: none;
+  padding-top: 154px;
+  padding-bottom: 46px;
+  background: #fff;
+  border: 0;
+  border-right: 1px solid #dce5e9;
+  border-radius: 0;
+  box-shadow: none;
+  z-index: 1;
+  animation: none;
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition:
+    transform 280ms ease,
+    visibility 280ms;
+}
+.is-list .app-offers {
+  transform: translateX(0);
+  visibility: visible;
+}
+.app-panel-heading {
+  flex-shrink: 0;
+}
+.app-offer-scroll {
+  min-height: 0;
+  flex: 1;
+}
+.app-demo,
+.app-dock {
+  z-index: 3;
+}
+.app-search-tools {
+  z-index: 3;
+}
+@media (max-width: 760px) {
+  .app-header {
+    height: calc(88px + env(safe-area-inset-top));
+    background: white;
+    border-bottom: 1px solid #e5ecef;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: env(safe-area-inset-top) 12px 0;
+  }
+  .app-header .app-brand {
+    position: static;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .app-header .brand-button {
+    padding: 8px 0;
+  }
+  .app-header-switch {
+    display: block;
+  }
+  .app-header-switch .app-view-switch {
+    box-shadow: none;
+    border: 1px solid #dce5e9;
+    border-radius: 14px;
+    padding: 4px;
+  }
+  .app-header-switch button {
+    padding: 11px 10px;
+    gap: 5px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+  .app-header-switch svg {
+    width: 17px;
+    height: 17px;
+  }
+  .app-dock > .app-view-switch {
+    display: none;
+  }
+  .app-search-tools {
+    top: calc(100px + env(safe-area-inset-top));
+  }
+  .app-offers {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    padding-top: calc(160px + env(safe-area-inset-top));
+    padding-bottom: calc(105px + env(safe-area-inset-bottom));
+    border: 0;
+    border-radius: 0;
+  }
+  .is-list .app-map-background {
+    left: 0;
+    width: 100%;
+    visibility: hidden;
+  }
+  .app-map-background {
+    transition: none;
+  }
+  .app-about {
+    top: calc(160px + env(safe-area-inset-top));
+    z-index: 6;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-offers,
+  .app-map-background {
+    transition: none;
+  }
+}
+
+/* Overlay drawer with a compact, balanced heading. */
+.app-panel-heading {
+  align-items: center;
+  gap: 14px;
+  padding: 24px 20px;
+}
+.app-panel-heading h1 {
+  font-size: 25px;
+  margin: 0;
+  letter-spacing: -0.6px;
+}
+.app-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.app-offer-count,
+.app-panel-heading .icon-button {
+  width: 46px;
+  height: 46px;
+  border: 1px solid #cad9e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: white;
+  color: #123c56;
+}
+.app-offer-count {
+  font-size: 22px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.app-panel-heading .icon-button:hover {
+  background: #edf5fa;
+  border-color: #004b91;
+}
+.app-offer-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #9cb6c6 transparent;
+  scrollbar-gutter: stable;
+}
+.app-offer-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.app-offer-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.app-offer-scroll::-webkit-scrollbar-thumb {
+  background: #9cb6c6;
+  border: 2px solid white;
+  border-radius: 20px;
+}
+.app-offer-scroll::-webkit-scrollbar-thumb:hover {
+  background: #527b94;
+}
+@media (min-width: 761px) {
+  .app-offers {
+    padding-top: 0;
+    box-shadow: 8px 0 28px #123c5612;
+  }
+  .app-map-background {
+    transition: left 280ms ease;
+  }
+  .is-list .app-map-background {
+    left: calc(var(--sidebar-width) / 2);
+    width: 100%;
+  }
+  .app-brand,
+  .app-about {
+    transition: left 280ms ease;
+  }
+  .is-list .app-brand,
+  .is-list .app-about {
+    left: calc(var(--sidebar-width) + 24px);
+  }
+}
+@media (min-width: 761px) and (max-width: 1300px) {
+  .is-list .app-brand-tagline {
+    display: none;
+  }
+  .is-list .app-search-tools {
+    top: 145px;
+    max-width: calc(100% - var(--sidebar-width) - 48px);
+  }
+  .is-list .app-about {
+    top: 270px;
+    width: min(370px, calc(100% - var(--sidebar-width) - 48px));
+  }
+}
+@media (max-width: 760px) {
+  .app-panel-heading {
+    padding: 18px;
+  }
+  .app-panel-heading h1 {
+    font-size: 24px;
+  }
+  .app-panel-actions {
+    gap: 8px;
+  }
+  .app-offer-count,
+  .app-panel-heading .icon-button {
+    width: 42px;
+    height: 42px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-brand,
+  .app-about,
+  .app-map-background {
+    transition: none;
+  }
+}
+@media (min-width: 761px) {
+  .is-list .mapboxgl-ctrl-bottom-right { right: calc(var(--sidebar-width) / 2 + 16px); }
+  .is-list .mapboxgl-ctrl-bottom-left { left: calc(var(--sidebar-width) / 2); }
+}
+
+/* Smaller campaign lockup; mobile map chrome floats over the map. */
+@media (min-width: 761px) {
+  .app-brand img { width: 145px; }
+  .app-brand .brand-button { padding: 12px 16px; }
+  .app-brand-tagline { width: 150px; padding: 8px 12px; }
+  .app-brand-tagline > span { font-size: 22px; }
+}
+@media (max-width: 760px) {
+  .app-brand img { width: 100px; }
+  .app-header { height: calc(72px + env(safe-area-inset-top)); }
+  .is-map .app-header { background: transparent; border-bottom-color: transparent; }
+  .is-map .app-header .app-brand { border-radius: 12px; box-shadow: var(--app-shadow); }
+  .is-map .app-header .brand-button { padding: 8px 10px; }
+  .app-search-tools { top: calc(84px + env(safe-area-inset-top)); }
+  .app-offers { padding-top: calc(144px + env(safe-area-inset-top)); }
+}
+
+/* Business-first directory rows and quieter campaign lettering. */
+.app-offer-copy { min-width: 0; }
+.app-offer-copy > .app-venue { font-size: 17px; font-weight: 600; line-height: 1.25; color: #123c56; }
+.app-offer-summary { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 13px; line-height: 1.5; color: #607985; }
+.app-brand-tagline > span { font-size: 20px; font-weight: 400; color: #ffffffd9; -webkit-font-smoothing: antialiased; }
+/* Each tab uses the same shell; long text scrolls within the content column. */
+.venue-detail.app-offer-detail { height: min(650px, 90dvh); overflow: hidden; }
+.venue-detail.app-offer-detail .detail-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #9cb6c6 transparent; }
+.venue-detail.app-offer-detail .app-detail-media { min-height: 0; height: 100%; }
+@media (max-width: 760px) {
+  .app-offer-copy > .app-venue { font-size: 16px; }
+  .venue-detail.app-offer-detail { height: 90dvh; }
+  .venue-detail.app-offer-detail .app-detail-media { height: 20dvh; min-height: 130px; max-height: 180px; }
+  .venue-detail.app-offer-detail .detail-body { flex: 1; }
+}
+
+/* Desktop drawer covers the stationary map and campaign logo. */
+@media (min-width: 761px) {
+  .app-map-background, .is-list .app-map-background { left: 0; width: 100%; transition: none; }
+  .app-brand, .is-list .app-brand { left: 24px; transition: none; }
+  .app-offers { z-index: 6; }
+  .is-list .app-search-tools { top: 24px; max-width: calc(100% - 474px); }
+  .is-list .mapboxgl-ctrl-bottom-right { right: 16px; }
+  .is-list .mapboxgl-ctrl-bottom-left { left: var(--sidebar-width); }
+  .is-list .app-brand-tagline { display: flex; }
+}
+.app-demo { z-index: 7; }
+
+/* Filters sit opposite the view switch, beneath the desktop drawer. */
+.app-filter-trigger { position: fixed; left: 24px; bottom: 42px; }
+.app-filter-popover { left: 24px; right: auto; }
+@media (max-width: 760px) {
+  .app-filter-trigger { left: 12px; bottom: calc(38px + env(safe-area-inset-bottom)); }
+  .app-filter-popover { left: 12px; right: 12px; }
+}
+
+/* Let the offers determine the frame; expanded conditions add natural height. */
+.venue-detail.app-offer-detail { height: auto; max-height: 90dvh; }
+.venue-detail.app-offer-detail .detail-body { max-height: 90dvh; }
+.venue-detail.app-offer-detail .app-detail-media { position: relative; height: auto; }
+.venue-detail.app-offer-detail .app-detail-media > img { position: absolute; inset: 0; }
+@media (max-width: 760px) {
+  .venue-detail.app-offer-detail .app-detail-media { height: clamp(130px, 20dvh, 180px); }
+  .venue-detail.app-offer-detail .detail-body { max-height: calc(90dvh - clamp(130px, 20dvh, 180px)); flex: auto; }
+}
+
+/* Search suggestions stay anchored to the search bar. */
+.app-search-tools:focus-within { z-index: 8; }
+.app-search-results { position: absolute; top: calc(100% + 10px); left: 0; right: 0; background: white; padding: 8px; border-radius: 16px; color: #123c56; }
+.app-search-result-count { font-size: 12px; color: #607985; margin: 6px 10px 10px; }
+.app-search-result-list { max-height: min(380px, 50dvh); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #9cb6c6 transparent; }
+.app-search-result { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; background: white; color: #123c56; padding: 10px; border-radius: 10px; }
+.app-search-result:hover, .app-search-result[aria-selected="true"] { background: #edf5fa; }
+.app-search-result img, .app-result-placeholder { width: 46px; height: 46px; object-fit: cover; border-radius: 9px; flex-shrink: 0; }
+.app-result-placeholder { display: flex; align-items: center; justify-content: center; background: #e4eef5; color: #004b91; }
+.app-search-result > span:not(.app-result-placeholder) { display: grid; gap: 4px; flex: 1; min-width: 0; }
+.app-search-result strong { font-size: 15px; font-weight: 600; }
+.app-search-result small { font-size: 12px; color: #607985; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.app-search-result > svg { flex-shrink: 0; }
+.app-search-empty { font-size: 13px; line-height: 1.5; margin: 8px 10px 12px; color: #607985; }
+
+/* Native-style navigation and menu panels. */
+.app-menu-trigger { position: absolute; top: 24px; right: 24px; width: 52px; height: 52px; border-radius: 50%; background: white; color: #123c56; z-index: 8; box-shadow: var(--app-shadow); }
+.app-search-tools, .is-list .app-search-tools { right: 88px; max-width: calc(100% - 538px); }
+.app-mobile-search-trigger, .app-mobile-search-close, .app-search-intro { display: none; }
+dialog.explorer-menu { position: fixed; inset: 0 0 0 auto; margin: 0; width: min(460px, 100vw); height: 100dvh; max-height: none; border-radius: 0; background: #fff; }
+.explorer-menu::backdrop { background: #102f465c; backdrop-filter: blur(10px); }
+.explorer-menu-inner { padding: 24px 28px 40px; height: 100%; overflow-y: auto; overscroll-behavior: contain; }
+.explorer-menu-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+.explorer-menu-heading .icon-button { width: 46px; height: 46px; border: 1px solid #dce6ed; border-radius: 50%; }
+.menu-brand { color: #004b91; font-weight: 600; font-size: 19px; }
+.explorer-menu h1 { font-size: 36px; line-height: 1.1; letter-spacing: -1px; margin: 0 0 24px; }
+.explorer-menu p { font-size: 15px; line-height: 1.7; color: #607985; }
+.explorer-menu-links { display: grid; margin: 32px 0; }
+.explorer-menu-links button { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; border-bottom: 1px solid #dce6ed; background: white; color: #123c56; text-align: left; border-radius: 0; }
+.explorer-menu-links button > span { display: grid; gap: 7px; }
+.explorer-menu-links strong { font-size: 22px; font-weight: 500; }
+.explorer-menu-links small { font-size: 13px; color: #607985; }
+.business-submission { display: grid; gap: 18px; }
+.business-submission > label { display: grid; gap: 7px; font-size: 14px; font-weight: 500; }
+.business-submission input, .business-submission textarea { width: 100%; padding: 12px; border: 1px solid #cad9e2; border-radius: 10px; background: #f8fafb; font-size: 16px; }
+.business-submission .submission-consent { display: flex; align-items: flex-start; gap: 10px; font-weight: 400; font-size: 13px; line-height: 1.5; }
+.submission-consent input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+.business-submission .submission-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.explorer-menu .submission-note { font-size: 12px; margin: 0; }
+.submission-success { padding: 20px 0; }
+@media (max-width: 760px) {
+  .app-header, .is-map .app-header { background: transparent; border: 0; }
+  .app-header .app-brand, .is-map .app-header .app-brand, .app-header .brand-button, .is-map .app-header .brand-button { background: transparent; box-shadow: none; padding: 0; }
+  .app-header { z-index: 5; }
+  .app-explorer::before, .app-explorer::after { content: ""; position: absolute; left: 0; right: 0; z-index: 1; pointer-events: none; }
+  .app-explorer::before { top: 0; height: 160px; background: linear-gradient(to bottom, #091e3999, transparent); }
+  .app-explorer::after { bottom: 0; height: 150px; background: linear-gradient(to top, #091e3999, transparent); }
+  .is-list .app-offers { z-index: 2; padding-top: calc(96px + env(safe-area-inset-top)); }
+  .app-dock > .app-view-switch { display: flex; border-radius: 999px; }
+  .app-view-switch button { border-radius: 999px; }
+  .app-filter-trigger { border-radius: 999px; }
+  .app-dock { z-index: 5; }
+  .app-menu-trigger { top: calc(14px + env(safe-area-inset-top)); right: 12px; width: 44px; height: 44px; }
+  .app-mobile-search-trigger { position: absolute; display: flex; top: calc(14px + env(safe-area-inset-top)); right: 66px; width: 44px; height: 44px; border-radius: 50%; background: white; color: #123c56; z-index: 8; }
+  .app-mobile-search-trigger[hidden] { display: none; }
+  .app-search-tools, .is-list .app-search-tools { display: none; }
+  .app-search-tools.mobile-search-active { display: flex; position: absolute; top: calc(14px + env(safe-area-inset-top)); left: 12px; right: 66px; max-width: none; height: 46px; border-radius: 999px; z-index: 12; background: #f0f4f7; box-shadow: none; border-color: #dce6ed; animation: mobile-search-expand 180ms ease-out; }
+  .mobile-search-active .app-date { display: none; }
+  .mobile-search-active .app-search input { font-size: 16px; }
+  .mobile-search-active .app-search { width: 100%; }
+  .app-mobile-search-close { display: flex; position: absolute; left: calc(100% + 10px); top: 0; width: 44px; height: 44px; border-radius: 50%; background: white; }
+  .app-mobile-search-backdrop { position: absolute; inset: 0; z-index: 10; background: #ffffffed; backdrop-filter: blur(18px); }
+  .mobile-search-active .app-search-results { position: fixed; top: calc(86px + env(safe-area-inset-top)); bottom: 0; left: 12px; right: 12px; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+  .mobile-search-active .app-search-result-list { max-height: calc(100dvh - 145px - env(safe-area-inset-top)); }
+  .mobile-search-active .app-search-result { background: transparent; padding: 16px 10px; border-bottom: 1px solid #dce6ed; border-radius: 0; }
+  .mobile-search-active .app-search-result:hover, .mobile-search-active .app-search-result[aria-selected="true"] { background: #edf5fa; }
+  .app-search-intro { display: block; position: fixed; top: calc(110px + env(safe-area-inset-top)); left: 24px; right: 24px; color: #123c56; }
+  .app-search-intro h1 { font-size: 30px; }
+  .app-search-intro p { color: #607985; line-height: 1.6; }
+  dialog.explorer-menu { width: 100vw; height: 100dvh; max-width: none; border-radius: 0; }
+  .explorer-menu-inner { padding: calc(18px + env(safe-area-inset-top)) 24px calc(32px + env(safe-area-inset-bottom)); }
+}
+@keyframes mobile-search-expand { from { clip-path: inset(0 0 0 80% round 30px); } to { clip-path: inset(0 0 0 0 round 30px); } }
+@media (prefers-reduced-motion: reduce) { .app-search-tools.mobile-search-active { animation: none; } }
+.menu-date { display: grid; gap: 8px; font-size: 13px; color: #607985; }
+.menu-date select { padding: 12px; border: 1px solid #cad9e2; border-radius: 10px; background: white; color: #123c56; }
+@media (max-width: 760px) {
+  .app-mobile-search-trigger, .app-menu-trigger { border: 1px solid #e1e8ed; }
+  .is-list::before, .is-list::after { z-index: 3; opacity: .22; }
+}
+
+/* Lean menu content and consistent mobile close controls. */
+.explorer-menu-heading { margin-bottom: 22px; }
+.explorer-menu-links { margin-top: 0; }
+.explorer-menu .campaign-page-link { margin-top: 20px; }
+.business-submission { margin-top: 28px; }
+.app-search-tools { gap: 0; }
+@media (max-width: 760px) {
+  .app-header .app-brand { overflow: visible; flex-shrink: 0; }
+  .app-header .brand-button { overflow: visible; }
+  .app-header .app-brand img { width: 108px; height: auto; max-height: none; object-fit: contain; display: block; }
+  .explorer-menu-inner { padding-top: calc(14px + env(safe-area-inset-top)); }
+  .explorer-menu-heading { height: 44px; margin: 0 0 26px; }
+  .explorer-menu-heading > .icon-button { width: 44px; height: 44px; }
+  .explorer-menu-heading > .icon-button:last-child { margin-right: -12px; }
+  dialog.explorer-menu[open] { animation: mobile-menu-in 240ms cubic-bezier(.2,.7,.2,1); }
+  .app-dock { bottom: calc(16px + env(safe-area-inset-bottom)); }
+  .app-filter-trigger { bottom: calc(16px + env(safe-area-inset-bottom)); }
+  .app-filter-popover { bottom: calc(80px + env(safe-area-inset-bottom)); }
+  .is-list .app-offers { z-index: 9; padding-top: env(safe-area-inset-top); padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+  .app-panel-heading { min-height: 72px; padding: 14px 12px 14px 18px; }
+  .app-offer-count, .app-panel-heading .icon-button { width: 44px; height: 44px; }
+  .is-list .app-dock { z-index: 10; }
+  .is-list .app-filter-trigger { visibility: hidden; }
+  .is-list::before, .is-list::after { z-index: 9; }
+}
+@keyframes mobile-menu-in { from { transform: translateX(100%); opacity: .5; } to { transform: translateX(0); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { dialog.explorer-menu[open] { animation: none; } }
+@media (max-width: 760px) {
+  .explorer-menu-heading > .icon-button:last-child { position: fixed; top: calc(14px + env(safe-area-inset-top)); right: 12px; margin-right: 0; z-index: 2; }
+}
+
+/* Unified pill-shaped search and desktop controls. */
+.app-search:focus-within { outline: none; box-shadow: none; border-radius: 999px; }
+.app-search-tools { border-radius: 999px; }
+.app-search-tools:has(.app-search input:focus-visible) { outline: 2px solid #0075bd; outline-offset: 2px; }
+.app-search, .app-search input { border-radius: 999px; }
+@media (min-width: 761px) {
+  .app-search-tools, .is-list .app-search-tools { height: 52px; padding: 0 16px; flex-wrap: nowrap; }
+  .app-search { width: 100%; height: 100%; }
+  .app-search input { flex: 1; width: 220px; height: 100%; }
+  .app-filter-trigger { height: 52px; border-radius: 999px; }
+  .app-dock > .app-view-switch { height: 52px; padding: 5px; border-radius: 999px; align-items: center; }
+  .app-dock > .app-view-switch button { height: 40px; padding: 0 18px; border-radius: 999px; }
+  .app-menu-trigger { width: 52px; height: 52px; }
+}
+@media (max-width: 760px) {
+  .app-mobile-search-close { background: #e2edf3; }
+}
+/* Updated wide wordmark and compact mobile motif. */
+@media(min-width:761px) { .app-brand img { width:176px; height:auto; object-fit:contain; } }
+@media(max-width:760px) { .app-header .app-brand img { width:60px; height:60px; margin-top: 2rem; object-fit:contain; } }
+/* Desktop logo trial: retain the original lockup rules above for reverting.
+   Mobile continues to use its existing motif sizing and positioning. */
+@media(min-width:761px) {
+  .app-header .app-brand, .app-header .brand-button { background:transparent; box-shadow:none; border:0; padding:0; }
+  .app-header .app-brand-tagline, .is-list .app-header .app-brand-tagline { display:none; }
+}
+
+.app-panel-heading h1 { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.app-panel-heading h1 > svg { color: #b89ad9; flex-shrink: 0; }
+.app-panel-actions { flex-shrink: 0; }
+@media (max-width: 380px) {
+  .app-panel-heading h1 { font-size: 20px; gap: 7px; }
+  .app-panel-heading h1 > svg { width: 23px; height: 23px; }
+}
+
+.app-search-count { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: #00558e; color: white; font-size: 12px; font-weight: 600; line-height: 1; }
+.app-mobile-search-trigger .app-search-count { position: absolute; top: -6px; right: -7px; width: 25px; height: 25px; border: 2px solid white; font-size: 11px; }
+.app-offer-count.search-filtered { background: #00558e; border-color: #00558e; color: white; }
+
+.app-menu-trigger.icon-button {
+  background: #1b8ece;
+  border-color: #1b8ece;
+  color: #fff;
+}
+.app-menu-trigger.icon-button:hover { background: #167db7; border-color: #167db7; }

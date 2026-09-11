@@ -1,0 +1,60 @@
+// Local UI test: submission requests are intercepted, never stored or sent to staff.
+import { chromium } from '@playwright/test';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({headless:true,channel:'chrome',args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
+page.setDefaultTimeout(20000);
+let submitted=false;
+const errors=[];page.on('pageerror',error=>errors.push(error.message));
+await page.route('**/api.php?action=public',async route=>{
+ const response=await route.fetch();const data=await response.json();
+ data.config.mapStyle={version:8,sources:{},layers:[{id:'background',type:'background',paint:{'background-color':'#d7e8ef'}}]};
+ await route.fulfill({json:data});
+});
+await page.route('**/api.php?action=submit-business',async route=>{
+ const request=route.request();const body=request.postDataBuffer();
+ assert.ok(request.headers()['x-csrf-token']);
+ assert.match(request.headers()['content-type'],/multipart\/form-data/);
+ assert.ok(body.includes(Buffer.from('image/webp')));
+ assert.ok(body.includes(Buffer.from('RIFF')));
+ assert.ok(body.includes(Buffer.from('Business exterior')));
+ assert.ok(body.includes(Buffer.from('offer_description')));
+ submitted=true;await route.fulfill({status:201,json:{ok:true}});
+});
+try {
+ await page.goto('http://127.0.0.1:8787/?experience=app&view=map');
+ await page.getByRole('button',{name:'Open menu',exact:true}).click();
+ await page.getByRole('button',{name:/Add your business/}).click();
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.getByText('Please check the highlighted fields before continuing.').waitFor();
+ await page.locator('.submission-wizard [name="name"]').fill('UI test venue');
+ await page.locator('.submission-wizard [name="description"]').fill('An independent local business.');
+ assert.equal(await page.locator('.submission-wizard [name="description"]').getAttribute('maxlength'),'500');
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.locator('.submission-wizard [name="address"]').fill('1 Test Street, Falmouth');
+ const marker=page.locator('.submission-map .venue-marker');await marker.waitFor();await marker.scrollIntoViewIfNeeded();
+ const box=await marker.boundingBox();await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width/2+30,box.y+box.height/2+20,{steps:15});await page.mouse.up();
+ await page.waitForFunction(()=>document.querySelector('[name="lat"]').value!=='');
+ assert.notEqual(await page.locator('.submission-wizard [name="lat"]').inputValue(),'');
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.locator('.submission-wizard [name="offer_title"]').fill('Evening meal offer');
+ await page.locator('.submission-wizard [name="offer_description"]').fill('A special meal for two.');
+ assert.equal(await page.locator('.submission-wizard [name="offer_description"]').getAttribute('maxlength'),'250');
+ await page.locator('[data-submission-step="2"] input[type="checkbox"]').first().check();
+ await page.locator('.submission-wizard [name="offer_redemption"]').fill('Mention After Five when booking.');
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.locator('input[type="file"]').first().setInputFiles('public/assets/logo.png');
+ await page.getByText(/Ready to send/).waitFor();
+ await page.locator('.submission-wizard [name="image_alt"]').fill('Business exterior');
+ await page.getByRole('checkbox',{name:/I have permission/}).check();
+ await page.getByRole('button',{name:'Continue',exact:true}).click();
+ await page.locator('.submission-wizard [name="contact"]').fill('UI tester');
+ await page.locator('.submission-wizard [name="email"]').fill('ui@example.test');
+ await page.getByRole('checkbox',{name:/I agree that Falmouth BID/}).check();
+ await page.screenshot({path:'/tmp/faf-submission-mobile.png'});
+ await page.getByRole('button',{name:'Submit for review',exact:true}).click();
+ await page.getByRole('heading',{name:'Submission received',exact:true}).waitFor();
+ assert.ok(submitted);assert.deepEqual(errors,[]);
+ console.log('PASS: mobile six-step form, field limits, map dragging, local WebP conversion and multipart submission; request intercepted without saving.');
+} catch(error) { await page.screenshot({path:'/tmp/faf-submission-failure.png'}).catch(()=>{}); throw error; } finally {await browser.close();}

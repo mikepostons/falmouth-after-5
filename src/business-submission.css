@@ -1,0 +1,30 @@
+dialog.explorer-menu.is-submission { width: min(680px, 100vw); }
+.submission-wizard > p { margin: 0; }
+.submission-wizard fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.submission-wizard [hidden] { display: none !important; }
+.submission-wizard section { display: grid; gap: 18px; }
+.submission-wizard .submission-field { display: grid; gap: 7px; font-size: 14px; font-weight: 500; }
+.submission-wizard small { color: #607985; font-size: 12px; font-weight: 400; }
+.submission-wizard .field-error { color: #a52b2b; }
+.submission-wizard [aria-invalid="true"] { border-color: #b93939; background: #fff5f5; }
+.submission-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.submission-steps button { display: flex; align-items: center; gap: 7px; padding: 9px; text-align: left; background: #eef4f8; color: #123c56; font-size: 12px; }
+.submission-steps button span { display: grid; place-items: center; min-width: 22px; height: 22px; border-radius: 50%; border: 1px solid currentColor; }
+.submission-steps [aria-current="step"] { color: white; background: #00558e; }
+.submission-steps button:disabled { opacity: .5; cursor: default; }
+.submission-wizard h2 { font-size: 21px; margin: 8px 0; }
+.submission-wizard h3 { font-size: 18px; margin: 0 0 12px; }
+.submission-wizard .submission-check { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.5; }
+.submission-wizard input[type="checkbox"] { width: 19px; height: 19px; margin: 2px 0; flex-shrink: 0; accent-color: #00558e; }
+.submission-wizard .submission-options { display: grid; gap: 12px; padding: 16px; border: 1px solid #dce6ed; border-radius: 12px; }
+.submission-options legend { font-size: 14px; font-weight: 600; padding: 0 5px; }
+.submission-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.submission-map { height: 290px; overflow: hidden; border-radius: 12px; }
+.submission-map .map-shell { height: 100%; min-height: 0; }
+.submission-photo { display: grid; gap: 10px; }
+.submission-photo > img { width: 100%; max-height: 220px; object-fit: contain; border-radius: 10px; background: #eef4f8; }
+.submission-navigation { display: flex; justify-content: space-between; gap: 12px; position: sticky; bottom: -40px; padding: 16px 0; background: #fff; border-top: 1px solid #dce6ed; z-index: 2; }
+.submission-error-summary { background: #fff3f3; border: 1px solid #d88585; color: #8a2525; border-radius: 10px; padding: 12px; }
+.submission-review-card { padding: 18px; border: 1px solid #dce6ed; border-radius: 12px; overflow-wrap: anywhere; }
+.submission-review-card p { white-space: pre-wrap; }
+@media (max-width: 760px) { .submission-steps button { padding: 7px; font-size: 11px; } .submission-navigation { bottom: -28px; } }

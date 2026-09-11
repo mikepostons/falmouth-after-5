@@ -1,0 +1,192 @@
+{
+  "demo-venue-1": {
+    "name": "The Shed",
+    "address": "6/7 Tidemill House, Discovery Quay, Falmouth TR11 3XP",
+    "lat": 50.1509975,
+    "lng": -5.0623747,
+    "address_source": "https://www.falmouth.co.uk/eatanddrink/the-shed/",
+    "pin_source": "https://www.openstreetmap.org/node/11985820322",
+    "notes": "BID venue pin; OSM point agrees within a few metres.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-2": {
+    "name": "The Boathouse",
+    "address": "Beacon Street, Falmouth TR11 2AG",
+    "lat": 50.1578927,
+    "lng": -5.0741156,
+    "address_source": "https://www.falmouth.co.uk/eatanddrink/the-boathouse/",
+    "pin_source": "https://www.openstreetmap.org/node/4459229605",
+    "notes": "BID venue pin, cross-checked with the mapped pub. OSM uses a different postcode; keep BID address.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-3": {
+    "name": "The Games Room",
+    "address": "12 Market Street, Falmouth TR11 3AE",
+    "lat": 50.1557351,
+    "lng": -5.0703227,
+    "address_source": "https://www.falmouth.co.uk/eatanddrink/the-games-room/",
+    "pin_source": "https://www.openstreetmap.org/node/10979756003",
+    "notes": "BID venue pin, supported by the named OSM business nearby; premises point, not an accessibility entrance survey.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-4": {
+    "name": "The Orgia",
+    "address": "43 Church Street, Falmouth TR11 3EF",
+    "lat": 50.1538766,
+    "lng": -5.0680564,
+    "address_source": "https://www.theorgia.com/book-a-table/",
+    "pin_source": "https://www.openstreetmap.org/node/11984337370",
+    "notes": "OSM named venue point; address supported by the indexed former official page. Operating status needs confirmation: Tripadvisor marks it closed and the current domain returned unrelated content.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-5": {
+    "name": "Pennycomequick",
+    "address": "16 Killigrew Street, The Moor, Falmouth TR11 3PN",
+    "lat": 50.154855,
+    "lng": -5.072065,
+    "address_source": "https://www.falmouth.co.uk/eatanddrink/pennycomequick/",
+    "pin_source": "https://www.openstreetmap.org/node/792595333",
+    "notes": "BID pin and full address; named OSM point agrees closely.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-6": {
+    "name": "Pocketful of Stones",
+    "address": "55 Church Street, Falmouth TR11 3DS",
+    "lat": 50.1546051,
+    "lng": -5.0683936,
+    "address_source": "https://www.falmouth.co.uk/eatanddrink/pocketful-of-stones/",
+    "pin_source": "https://www.openstreetmap.org/node/11984353274",
+    "notes": "BID venue pin, supported by OSM. Corrects the old High Street demo address.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-7": {
+    "name": "The Poly",
+    "address": "24 Church Street, Falmouth TR11 3EG",
+    "lat": 50.1537252,
+    "lng": -5.0681327,
+    "address_source": "https://thepoly.org/contact",
+    "pin_source": "https://www.openstreetmap.org/node/10983006187",
+    "notes": "Named OSM arts-centre point, aligned with the official address. Prefer the venue point over the larger building centroid.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-8": {
+    "name": "Mangos Sports Bar",
+    "address": "Unit 5, Discovery Quay, Falmouth TR11 3XA",
+    "lat": 50.15163014807267,
+    "lng": -5.062917832984068,
+    "address_source": "User-supplied coordinates, 9 September 2026",
+    "pin_source": "https://www.openstreetmap.org/node/14022062692",
+    "notes": "Exact supplied coordinates retained. The Discovery Quay OSM record supports the location; do not use the older Mangos Bar & Dance point on Church/Market Street.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-9": {
+    "name": "Windjammer",
+    "address": "Grove Place, Falmouth TR11 4AU",
+    "lat": 50.1517129,
+    "lng": -5.0642949,
+    "address_source": "https://www.windjammercafebar.co.uk/",
+    "pin_source": "https://maps.apple.com/place?place-id=ICCF4B6C68E3CE185",
+    "notes": "Apple Maps named POI used provisionally. BID pin is near Fives; CAMRA gives a point about 70 m away. Correct working-slipway premises area, exact entrance still needs local confirmation.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-10": {
+    "name": "Fives Cyderhouse",
+    "address": "7 Grove Place, Falmouth TR11 4AU",
+    "lat": 50.1511535,
+    "lng": -5.0650892,
+    "address_source": "https://fivescyderhouse.co.uk/contact/",
+    "pin_source": "https://www.openstreetmap.org/way/309216709",
+    "notes": "Coordinates from the destination in the venue’s own Directions link. Map label retains its former Five Degrees West name; current website confirms Fives at this address.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-11": {
+    "name": "Harbour Lights",
+    "address": "Arwenack Street, Falmouth TR11 3LH",
+    "lat": 50.1521439,
+    "lng": -5.0652902,
+    "address_source": "https://harbourlights.co.uk/contact/",
+    "pin_source": "https://www.falmouth.co.uk/eatanddrink/harbour-lights/",
+    "notes": "BID restaurant pin with official address; OSM distinguishes restaurant and takeaway points nearby.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-12": {
+    "name": "The Greenbank",
+    "address": "Harbourside, Falmouth TR11 2SR",
+    "lat": 50.1613008,
+    "lng": -5.0745025,
+    "address_source": "https://greenbank-hotel.co.uk/about/contact/",
+    "pin_source": "https://www.falmouth.co.uk/accommodation/greenbank-hotel/",
+    "notes": "BID hotel pin agrees with OSM building way 159875075. Keep separate from The Working Boat below it.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-13": {
+    "name": "The Grapes",
+    "address": "64 Church Street, Falmouth TR11 3DS",
+    "lat": 50.1550461,
+    "lng": -5.0684821,
+    "address_source": "https://www.craftunionpubs.com/grapes-inn-falmouth",
+    "pin_source": "https://www.openstreetmap.org/node/676244967",
+    "notes": "Operator website’s structured geo and map pin; supported by OSM. Replaces the misplaced BID pin beside Pocketful of Stones.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-14": {
+    "name": "Harry’s Taqueria",
+    "address": "22 Killigrew Street, Falmouth TR11 3PN",
+    "lat": 50.1545995,
+    "lng": -5.0724284,
+    "address_source": "https://www.falmouthtowncouncil.co.uk/wp-content/uploads/2025/09/250630-Planning-Licensing-Minutes-acc_checked.pdf",
+    "pin_source": "https://www.openstreetmap.org/node/10979778599",
+    "notes": "Council licensing record supports number 22 Killigrew Street; named OSM restaurant point used. Habanero’s on Arwenack Street is a separate business.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-15": {
+    "name": "Maya’s",
+    "address": "49 Killigrew Street, Falmouth TR11 3PW",
+    "lat": 50.1538456,
+    "lng": -5.0734565,
+    "address_source": "https://mayasfalmouth.co.uk/",
+    "pin_source": "https://www.openstreetmap.org/node/10979774400",
+    "notes": "Official shop address plus named OSM point. OSM tags it as clothes, consistent with the shop alongside the creative studio.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-16": {
+    "name": "The Working Boat",
+    "address": "Greenbank Quay, Falmouth TR11 2SR",
+    "lat": 50.1609887,
+    "lng": -5.0740746,
+    "address_source": "https://www.falmouth.co.uk/eatanddrink/the-working-boat/",
+    "pin_source": "https://www.openstreetmap.org/node/6459401785",
+    "notes": "Named venue point or premises centroid; not a surveyed entrance.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-17": {
+    "name": "Chain Locker",
+    "address": "Custom House Quay, Quay Street, Falmouth TR11 3HH",
+    "lat": 50.1527784,
+    "lng": -5.0661289,
+    "address_source": "https://www.falmouth.co.uk/eatanddrink/the-chainlocker/",
+    "pin_source": "https://www.falmouth.co.uk/eatanddrink/the-chainlocker/",
+    "notes": "Named venue point or premises centroid; not a surveyed entrance.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-18": {
+    "name": "Kernowine",
+    "address": "21 Killigrew Street, Falmouth TR11 3PN",
+    "lat": 50.1546473,
+    "lng": -5.0723795,
+    "address_source": "https://www.falmouth.co.uk/eatanddrink/kernowine/",
+    "pin_source": "https://www.openstreetmap.org/node/10979718897",
+    "notes": "Named venue point or premises centroid; not a surveyed entrance.",
+    "checked_on": "2026-09-09"
+  },
+  "demo-venue-19": {
+    "name": "Merchants Manor",
+    "address": "1 Western Terrace, Falmouth TR11 4QJ",
+    "lat": 50.1481393,
+    "lng": -5.0746434,
+    "address_source": "https://www.falmouth.co.uk/accommodation/merchants-manor-hotel/",
+    "pin_source": "https://www.openstreetmap.org/relation/16069781",
+    "notes": "Named venue point or premises centroid; not a surveyed entrance.",
+    "checked_on": "2026-09-09"
+  }
+}

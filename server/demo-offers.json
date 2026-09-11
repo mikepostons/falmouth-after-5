@@ -1,0 +1,233 @@
+{
+  "demo-offer-1": {
+    "business_id": "demo-venue-1",
+    "title": "Two drinks for one",
+    "description": "Any two drinks for the cost of one.",
+    "categories": [
+      "drinks"
+    ],
+    "start": "17:00",
+    "end": "19:00",
+    "time_note": "",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-2": {
+    "business_id": "demo-venue-2",
+    "title": "Loaded fries + a drink · £10",
+    "description": "£10 includes loaded fries with a pint, wine or soft drink.",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-3": {
+    "business_id": "demo-venue-3",
+    "title": "20p off every pint",
+    "description": "Save 20p on all pints during happy hour.",
+    "categories": [
+      "drinks"
+    ],
+    "start": "17:00",
+    "end": "19:00",
+    "time_note": "",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-13": {
+    "business_id": "demo-venue-13",
+    "title": "Smirnoff + mixer · £3",
+    "description": "£3 for a single Smirnoff in any flavour, with coke or lemonade.",
+    "categories": [
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-4": {
+    "business_id": "demo-venue-4",
+    "title": "Snacks, plates & wine",
+    "description": "Choose three snacks (£10), three plates (£18), or a glass of wine (£7).",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-12": {
+    "business_id": "demo-venue-12",
+    "title": "A house drink with your main",
+    "description": "Order any main course and receive a complimentary house drink, at lunch or dinner.",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Lunch & dinner · check service times",
+    "redemption": "Quote “Falmouth After 5” when booking.",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-5": {
+    "business_id": "demo-venue-5",
+    "title": "Burger or pizza + a drink · £15",
+    "description": "£15 includes a burger or pizza with a pint or small house wine.",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-16": {
+    "business_id": "demo-venue-16",
+    "title": "A house drink with your main",
+    "description": "Order any main course and receive a complimentary house drink, at lunch or dinner.",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Lunch & dinner · check service times",
+    "redemption": "Quote “Falmouth After 5” when booking.",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-6": {
+    "business_id": "demo-venue-6",
+    "title": "Shop & enter the tasting draw",
+    "description": "Spend over £10 in-store for a monthly raffle entry: a tasting experience and 700ml spirit bottle are the prize.",
+    "categories": [
+      "shopping",
+      "experiences"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-14": {
+    "business_id": "demo-venue-14",
+    "title": "Hot wings + Corona · £12.50",
+    "description": "£12.50 for habanero hot wings with a pint of Corona.",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-17": {
+    "business_id": "demo-venue-17",
+    "title": "Tarquins & St Austell specials",
+    "description": "Buy a Tarquins drink and get a second at half price; save £1 on St Austell brewery drinks.",
+    "categories": [
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-10": {
+    "business_id": "demo-venue-10",
+    "title": "Pizza, pints & doubles",
+    "description": "Any pizza costs £12.50; pints and house doubles cost £5.",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-18": {
+    "business_id": "demo-venue-18",
+    "title": "Small plates + wine · £20",
+    "description": "£20 includes two small plates and a medium keg wine.",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-9": {
+    "business_id": "demo-venue-9",
+    "title": "Two matching cocktails · £10",
+    "description": "Choose two identical cocktails for £10.",
+    "categories": [
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-19": {
+    "business_id": "demo-venue-19",
+    "title": "Drinks for £5",
+    "description": "£5 per drink.",
+    "categories": [
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-8": {
+    "business_id": "demo-venue-8",
+    "title": "First 50 games free",
+    "description": "The first 50 games are complimentary.",
+    "categories": [
+      "entertainment"
+    ],
+    "start": "17:00",
+    "end": "19:00",
+    "time_note": "",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  },
+  "demo-offer-11": {
+    "business_id": "demo-venue-11",
+    "title": "A drink with any meal",
+    "description": "A complimentary wine, beer or non-alcoholic drink accompanies any meal.",
+    "categories": [
+      "food",
+      "drinks"
+    ],
+    "start": "00:00",
+    "end": "23:59",
+    "time_note": "Check times with venue",
+    "redemption": "",
+    "terms": "Source: Falmouth BID’s published 6 March offer list. Shown on a sample preview date; availability on a new campaign date is not yet confirmed."
+  }
+}

@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Icon from "./icons";
 import { createRoot } from "react-dom/client";
+const START_CAMERA = {
+  center: [-5.072306, 50.154508],
+  zoom: 15.28,
+  bearing: 94,
+  pitch: 65,
+};
+
 export default function MapView({
   config,
   businesses,
@@ -9,6 +16,10 @@ export default function MapView({
   onSelect,
   picker,
   onPick,
+  clusterZoom = false,
+  hideTools = false,
+  onControls,
+  onReady,
 }) {
   const el = useRef(null),
     mapRef = useRef(null),
@@ -29,6 +40,7 @@ export default function MapView({
     let cancelled = false,
       timeout;
     let map;
+    let cancelFocus = () => {};
     async function init() {
       if (!config?.mapboxToken) {
         setState("unavailable");
@@ -46,13 +58,75 @@ export default function MapView({
           container: el.current,
           accessToken: config.mapboxToken,
           style: config.mapStyle || "mapbox://styles/mapbox/standard",
-          center: [-5.0678, 50.1541],
-          zoom: 14.8,
-          pitch: picker ? 0 : 48,
-          bearing: -18,
+          ...START_CAMERA,
+          ...(picker &&
+          Number.isFinite(latest.current.businesses[0]?.lng) &&
+          Number.isFinite(latest.current.businesses[0]?.lat)
+            ? {
+                center: [
+                  latest.current.businesses[0].lng,
+                  latest.current.businesses[0].lat,
+                ],
+                zoom: 16.5,
+              }
+            : {}),
+          pitch: picker ? 0 : START_CAMERA.pitch,
+          bearing: picker ? 0 : START_CAMERA.bearing,
           attributionControl: true,
         });
         mapRef.current = map;
+        const duration = () =>
+          matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 450;
+        onControls?.({
+          cancelFocus: () => cancelFocus(),
+          focusVenue: (business, onArrival) => {
+            cancelFocus();
+            if (
+              !map.isStyleLoaded() ||
+              !Number.isFinite(business?.lng) ||
+              !Number.isFinite(business?.lat)
+            ) {
+              onArrival();
+              return;
+            }
+            map.stop();
+            let active = true;
+            const clear = () => {
+              active = false;
+              map.off("moveend", arrive);
+              map.off("mousedown", clear);
+              map.off("wheel", clear);
+              map.off("touchstart", clear);
+            };
+            const arrive = () => {
+              if (!active) return;
+              clear();
+              if (!cancelled) onArrival();
+            };
+            cancelFocus = clear;
+            map.on("moveend", arrive);
+            map.on("mousedown", clear);
+            map.on("wheel", clear);
+            map.on("touchstart", clear);
+            map.easeTo({
+              center: [business.lng, business.lat],
+              zoom: Math.max(map.getZoom(), 17.6),
+              duration: duration() ? 850 : 0,
+            });
+            if (!map.isMoving()) arrive();
+          },
+          setPitch: (enabled) => {
+            setTilted(enabled);
+            map.easeTo({
+              pitch: enabled ? START_CAMERA.pitch : 0,
+              duration: duration(),
+            });
+          },
+          reset: () => {
+            setTilted(true);
+            map.easeTo({ ...START_CAMERA, duration: duration() });
+          },
+        });
         map.addControl(
           new mapboxgl.NavigationControl({ visualizePitch: true }),
           "bottom-right",
@@ -68,7 +142,7 @@ export default function MapView({
           markers.current = [];
         };
         redraw.current = () => {
-          if (!map.loaded()) return;
+          if (!map.isStyleLoaded()) return;
           removeMarkers();
           const { businesses, offers, categories, onSelect, picker } =
             latest.current;
@@ -92,7 +166,25 @@ export default function MapView({
               }
               group.venues.push(b);
             });
-          groups.forEach(({ venues }) => {
+          // At street scale, fan out pins that share coordinates so every venue stays selectable.
+          const displayed =
+            clusterZoom && map.getZoom() >= 19
+              ? groups.flatMap((g) =>
+                  g.venues.map((v, i) => ({
+                    venues: [v],
+                    offset:
+                      g.venues.length > 1
+                        ? [
+                            Math.cos((i * 2 * Math.PI) / g.venues.length) *
+                              Math.max(55, g.venues.length * 9),
+                            Math.sin((i * 2 * Math.PI) / g.venues.length) *
+                              Math.max(55, g.venues.length * 9),
+                          ]
+                        : [0, 0],
+                  })),
+                )
+              : groups;
+          displayed.forEach(({ venues, offset = [0, 0] }) => {
             const b = venues[0],
               button = document.createElement("button");
             button.className = "venue-marker";
@@ -117,18 +209,105 @@ export default function MapView({
             );
             const root = createRoot(button);
             root.render(
-              <span>
-                {venues.length > 1 ? (
-                  venues.length
-                ) : (
-                  <Icon name={cats[0]?.icon || "pin"} size={21} />
+              <>
+                <span>
+                  {venues.length > 1 ? (
+                    venues.length
+                  ) : (
+                    <Icon name={cats[0]?.icon || "pin"} size={21} />
+                  )}
+                </span>
+                {!picker && (
+                  <span className="venue-hover-card" aria-hidden="true">
+                    {venues.slice(0, 3).map((venue) => (
+                      <span className="venue-hover-row" key={venue.id}>
+                        {venue.image ? (
+                          <img src={"./" + venue.image} alt="" loading="lazy" />
+                        ) : (
+                          <span className="venue-hover-placeholder">
+                            <Icon name="pin" size={24} />
+                          </span>
+                        )}
+                        <span className="venue-hover-copy">
+                          <strong>{venue.name}</strong>
+                          <span className="venue-hover-types">
+                            {categories
+                              .filter((category) =>
+                                offers.some(
+                                  (offer) =>
+                                    offer.business_id === venue.id &&
+                                    offer.categories.includes(category.id),
+                                ),
+                              )
+                              .map((category) => (
+                                <span
+                                  key={category.id}
+                                  style={{ color: category.colour }}
+                                >
+                                  {category.name}
+                                </span>
+                              ))}
+                          </span>
+                        </span>
+                      </span>
+                    ))}
+                    {venues.length > 3 && (
+                      <span className="venue-hover-more">
+                        +{venues.length - 3} more venues
+                      </span>
+                    )}
+                    {venues.length > 1 && (
+                      <span className="venue-hover-hint">
+                        Click to explore these venues
+                      </span>
+                    )}
+                  </span>
                 )}
-              </span>,
+              </>,
             );
+            const positionHover = () => {
+              button.classList.remove("hover-dismissed");
+              const point = map.project([b.lng, b.lat]);
+              button.classList.toggle(
+                "hover-below",
+                point.y + offset[1] < Math.min(260, venues.length * 80 + 70),
+              );
+              button.classList.toggle(
+                "hover-align-left",
+                point.x + offset[0] < 140,
+              );
+              button.classList.toggle(
+                "hover-align-right",
+                point.x + offset[0] > el.current.clientWidth - 140,
+              );
+            };
+            button.addEventListener("mouseenter", positionHover);
+            button.addEventListener("focus", positionHover);
+            button.addEventListener("keydown", (e) => {
+              if (e.key === "Escape") button.classList.add("hover-dismissed");
+            });
             button.onclick = (e) => {
               e.stopPropagation();
               if (venues.length > 1 && !picker) {
-                onSelect(venues);
+                if (clusterZoom) {
+                  const bounds = new mapboxgl.LngLatBounds();
+                  venues.forEach((v) => bounds.extend([v.lng, v.lat]));
+                  const camera = map.cameraForBounds(bounds, {
+                    padding: 100,
+                    maxZoom: 19,
+                  });
+                  map.easeTo({
+                    ...camera,
+                    pitch: map.getPitch(),
+                    bearing: map.getBearing(),
+                    center: bounds.getCenter(),
+                    zoom: Math.min(
+                      19,
+                      Math.max(map.getZoom() + 2, camera?.zoom || 19),
+                    ),
+                    duration: duration(),
+                  });
+                } else onSelect(venues);
                 return;
               }
               onSelect?.(venues);
@@ -137,6 +316,7 @@ export default function MapView({
               element: button,
               anchor: "bottom",
               draggable: !!picker,
+              offset,
             })
               .setLngLat([b.lng, b.lat])
               .addTo(map);
@@ -148,6 +328,7 @@ export default function MapView({
             markers.current.push({ marker, root });
           });
         };
+        map.once("idle", () => { if (!cancelled) onReady?.(); });
         map.on("load", () => {
           clearTimeout(timeout);
           if (!cancelled) {
@@ -156,6 +337,9 @@ export default function MapView({
           }
         });
         map.on("moveend", () => redraw.current());
+        map.on("idle", () => {
+          if (!picker) redraw.current();
+        });
         map.on("click", (e) => {
           if (latest.current.picker) latest.current.onPick?.(e.lngLat);
         });
@@ -172,6 +356,7 @@ export default function MapView({
     init();
     return () => {
       cancelled = true;
+      cancelFocus();
       clearTimeout(timeout);
       markers.current.forEach((m) => {
         m.root?.unmount();
@@ -180,14 +365,16 @@ export default function MapView({
       markers.current = [];
       map?.remove();
       mapRef.current = null;
+      onControls?.(null);
     };
   }, [config?.mapboxToken, config?.mapStyle, picker]);
   const markerSignature = JSON.stringify({
-    businesses: businesses.map(({ id, name, lat, lng }) => ({
+    businesses: businesses.map(({ id, name, lat, lng, image }) => ({
       id,
       name,
       lat,
       lng,
+      image,
     })),
     offers: offers.map(({ id, business_id, categories }) => ({
       id,
@@ -230,14 +417,14 @@ export default function MapView({
           </p>
         </div>
       )}
-      {state === "ready" && !picker && (
+      {state === "ready" && !picker && !hideTools && (
         <div className="map-tools">
           <button
             onClick={() => {
               const next = !tilted;
               setTilted(next);
               mapRef.current.easeTo({
-                pitch: next ? 48 : 0,
+                pitch: next ? START_CAMERA.pitch : 0,
                 duration: matchMedia("(prefers-reduced-motion: reduce)").matches
                   ? 0
                   : 450,
@@ -247,16 +434,15 @@ export default function MapView({
             {tilted ? "2D view" : "3D view"}
           </button>
           <button
-            onClick={() =>
+            onClick={() => {
+              setTilted(true);
               mapRef.current.easeTo({
-                center: [-5.0678, 50.1541],
-                zoom: 14.8,
-                bearing: -18,
+                ...START_CAMERA,
                 duration: matchMedia("(prefers-reduced-motion: reduce)").matches
                   ? 0
                   : 450,
-              })
-            }
+              });
+            }}
           >
             <Icon name="compass" /> Reset view
           </button>

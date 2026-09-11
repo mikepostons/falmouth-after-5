@@ -79,3 +79,17 @@ It validates database integrity and environment mode, retains the current databa
 ## Before public launch
 
 Confirm the final URL, service-account ownership, privacy/analytics integration, HTTPS and private storage. Verify all business addresses and pins, authorised imagery, approved offers, exact dates/times and conditions. Nominate both staff users and the backup/maintenance owner. The provisional 11 September launch is an app launch target, not evidence that historical offers are valid on that date.
+
+### Staff access and image requirements
+
+PHP GD must support WebP encoding; PHP DOM is required for safe SVG validation. Run `php scripts/check.php` on the server. After creating Mike's account with `scripts/user.php create mike@3deepmedia.com Mike`, grant its role with `php scripts/user.php promote mike@3deepmedia.com`. All other accounts default to ordinary admins. Staff invitations and reset links are generated in the super-admin UI and shared manually, with no email integration required. They expire in 24 hours. Do not include account-link query strings in analytics or logs. Configure the web server to redact query strings for staff URLs. Serve uploads with `nosniff` and SVGs with a restrictive CSP; deploy the provided uploads `.htaccess` for Apache, or equivalent rules for other servers.
+
+## Public submission wizard and private photos
+
+The public form now submits a multipart request with JSON in `data` and optional `business_image` / `offer_image` WebP files. Allow at least 5 MB request bodies (`post_max_size` and reverse-proxy limits) and at least 2 MB per uploaded file (`upload_max_filesize`); existing 8 MB staff-upload settings are sufficient. GD with WebP decoding/encoding is required. The server re-encodes images, generates filenames and stores them under `APP_DATA_DIR/submission-images/`, outside the public document root. The runtime creates this directory with restricted permissions. Do not expose this folder as a static URL. Staff retrieve images through an authenticated API endpoint.
+
+Updated backup/restore scripts include private submission photos. Submissions remain private until staff create and publish approved CMS records; marking a submission reviewed does not publish it. No email notifications or email verification are sent. Before launch, agree who reviews submissions and how long rejected/unused applications and photos should be retained. Per-IP submission/attempt throttles and a honeypot are included; a managed anti-bot challenge can be added if public abuse requires it. Keep PHP/GD patched. Upload and input checks follow layered guidance from the [OWASP File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html) and [Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html).
+
+## Direct repository deployment
+
+When pointing the host document root at the repo's `public/` directory, keep `.env` and `private/` in the repo root outside that document root. Retain the repo-root `Require all denied`. The public `.htaccess` must include `Require all granted` outside its FilesMatch block to override the inherited parent denial; dotfiles remain denied. Without this override, Apache-compatible hosts can return 403 for the whole app. Configure environment paths for the actual host rather than copying local workstation paths.

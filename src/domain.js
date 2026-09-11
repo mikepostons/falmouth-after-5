@@ -23,6 +23,18 @@ export function availableDates(data, now = new Date()) {
 export function defaultDate(data, now = new Date()) {
   return availableDates(data, now)[0]?.id || "";
 }
+export function nextOfferDate(data, now = new Date()) {
+  return (
+    availableDates(data, now).find((day) =>
+      data.offers.some((offer) =>
+        offer.occurrences.some(
+          (occurrence) =>
+            occurrence.date_id === day.id && new Date(occurrence.end_iso) > now,
+        ),
+      ),
+    )?.id || ""
+  );
+}
 export function matchingOffers(
   data,
   dateId,
@@ -30,7 +42,17 @@ export function matchingOffers(
   categories = [],
   now = new Date(),
 ) {
-  const q = search.trim().toLocaleLowerCase("en-GB");
+  const normalize = (value) => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("en-GB");
+  const terms = normalize(search).trim().split(/\s+/).filter(Boolean);
+  const aliases = {
+    food: "eat eating dining dine meal meals restaurant restaurants",
+    drinks: "drink drinking bar bars pub pubs",
+    shopping: "shop shops retail",
+    entertainment: "entertainment entertain",
+    experiences: "experience activities activity things to do",
+    wellbeing: "wellness wellbeing well-being",
+  };
+  const categoryNames = new Map((data.categories || []).map((category) => [category.id, category.name]));
   const venues = new Map(data.businesses.map((b) => [b.id, b]));
   return data.offers.filter(
     (o) =>
@@ -39,10 +61,13 @@ export function matchingOffers(
       ) &&
       (!categories.length ||
         o.categories.some((c) => categories.includes(c))) &&
-      (!q ||
-        `${venues.get(o.business_id)?.name} ${o.title} ${o.description}`
-          .toLocaleLowerCase("en-GB")
-          .includes(q)),
+      terms.every((term) => {
+        const categoryText = o.categories.map((id) => {
+          const name = normalize(categoryNames.get(id) || id);
+          return `${name} ${aliases[name] || ""}`;
+        }).join(" ");
+        return normalize(`${venues.get(o.business_id)?.name || ""} ${o.title || ""} ${o.description || ""} ${categoryText}`).includes(term);
+      }),
   );
 }
 export function firstFriday(month) {
@@ -68,4 +93,34 @@ export function timeLabel(value) {
     .format(new Date(value))
     .replace(":00", "")
     .replace(" ", "");
+}
+
+// Draft previews use the same campaign inclusion rules as the public API.
+export function campaignOccurrences(offer, campaigns) {
+  if (!offer.schedule_mode || offer.legacy_schedule)
+    return offer.occurrences || [];
+  const ids = offer.campaign_ids || [];
+  const last =
+    campaigns
+      .filter((d) => ids.includes(d.id))
+      .map((d) => d.date)
+      .sort()
+      .at(-1) || "";
+  return campaigns
+    .filter(
+      (d) =>
+        offer.schedule_mode === "all" ||
+        ids.includes(d.id) ||
+        (offer.roll_over && last && d.date > last),
+    )
+    .map((d) => {
+      const day = new Date(d.date + "T12:00:00Z");
+      if (offer.end_time <= offer.start_time)
+        day.setUTCDate(day.getUTCDate() + 1);
+      return {
+        date_id: d.id,
+        start: d.date + "T" + offer.start_time,
+        end: day.toISOString().slice(0, 10) + "T" + offer.end_time,
+      };
+    });
 }

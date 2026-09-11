@@ -10,5 +10,7 @@ if(is_file($target))rename($target,$target.'.before-restore-'.$stamp);
 if(!copy($from.'/content.sqlite',$target))throw new RuntimeException('Could not install restored database.');chmod($target,0600);
 $uploads=publicDir().'/uploads';if(is_dir($uploads))rename($uploads,$uploads.'.before-restore-'.$stamp);mkdir($uploads,0755,true);
 foreach(glob($from.'/uploads/*') as $f)if(is_file($f))copy($f,$uploads.'/'.basename($f));
-file_put_contents($uploads.'/.htaccess',"Options -Indexes -ExecCGI\n<FilesMatch \"\\.(php[0-9]?|phtml|phar|cgi|pl|html|svg)$\">\nRequire all denied\n</FilesMatch>\n");
+file_put_contents($uploads.'/.htaccess',"Options -Indexes -ExecCGI\n<FilesMatch \"\\.(php[0-9]?|phtml|phar|cgi|pl|html)$\">\nRequire all denied\n</FilesMatch>\n");
+$privatePhotos=dataDir().'/submission-images';if(is_dir($privatePhotos))rename($privatePhotos,$privatePhotos.'.before-restore-'.$stamp);mkdir($privatePhotos,0700);
+foreach(glob($from.'/submission-images/*.webp') as $f)if(is_file($f)&&preg_match('/^[a-f0-9]{32}\.webp$/',basename($f))){copy($f,$privatePhotos.'/'.basename($f));chmod($privatePhotos.'/'.basename($f),0600);}
 echo "Backup restored. Verify content and staff access before reopening the app.\n";

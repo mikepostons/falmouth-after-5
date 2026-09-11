@@ -1,6 +1,6 @@
 <?php
 header('X-Content-Type-Options: nosniff');
-header('Referrer-Policy: strict-origin-when-cross-origin');
+header('Referrer-Policy: '.(isset($_GET['admin'])?'no-referrer':'strict-origin-when-cross-origin'));
 header('X-Frame-Options: SAMEORIGIN');
 header('Cache-Control: no-cache');
 $file=__DIR__.'/build/index.html';

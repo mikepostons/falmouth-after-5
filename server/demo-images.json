@@ -1,0 +1,58 @@
+{
+  "The Boathouse": {
+    "image": "assets/business-boathouse.webp",
+    "image_alt": "Colourful bar and wooden tables inside The Boathouse"
+  },
+  "The Games Room": {
+    "image": "assets/business-games-room.webp",
+    "image_alt": "Players enjoying pool tables at The Games Room"
+  },
+  "Pennycomequick": {
+    "image": "assets/business-pennycomequick.webp",
+    "image_alt": "Wooden tables and seating inside Pennycomequick"
+  },
+  "Pocketful of Stones": {
+    "image": "assets/business-pocketful-of-stones.webp",
+    "image_alt": "Spirits displayed on a barrel beside a harbour-facing window"
+  },
+  "Windjammer": {
+    "image": "assets/business-windjammer.webp",
+    "image_alt": "Colourful bowls of food served at Windjammer"
+  },
+  "Fives Cyderhouse": {
+    "image": "assets/business-fives-cyderhouse.webp",
+    "image_alt": "Pizza on a terrace table at Fives Cyderhouse"
+  },
+  "Harbour Lights": {
+    "image": "assets/business-harbour-lights.webp",
+    "image_alt": "Fish and chips with drinks at an outdoor table"
+  },
+  "The Greenbank": {
+    "image": "assets/business-the-greenbank.webp",
+    "image_alt": "Dining tables beside harbour-view windows at The Greenbank"
+  },
+  "The Grapes": {
+    "image": "assets/business-the-grapes.webp",
+    "image_alt": "The Grapes pub exterior and outdoor seating"
+  },
+  "Harry’s Taqueria": {
+    "image": "assets/business-harrys.webp",
+    "image_alt": "Street frontage and outdoor seating at Harry’s Taqueria"
+  },
+  "The Working Boat": {
+    "image": "assets/business-working-boat.webp",
+    "image_alt": "Harbour views from The Working Boat dining area"
+  },
+  "Chain Locker": {
+    "image": "assets/business-chain-locker.webp",
+    "image_alt": "Food and drinks on a table at Chain Locker"
+  },
+  "Kernowine": {
+    "image": "assets/business-kernowine.webp",
+    "image_alt": "Wine display and bar inside Kernowine"
+  },
+  "Merchants Manor": {
+    "image": "assets/business-merchants-manor.webp",
+    "image_alt": "A selection of dishes at Merchants Manor"
+  }
+}

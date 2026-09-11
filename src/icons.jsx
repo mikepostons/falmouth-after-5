@@ -32,6 +32,8 @@ import {
   FloppyDisk,
   Globe,
   Phone,
+  FacebookLogo,
+  InstagramLogo,
 } from "@phosphor-icons/react";
 export const icons = {
   drinks: Wine,
@@ -68,8 +70,21 @@ export const icons = {
   save: FloppyDisk,
   globe: Globe,
   phone: Phone,
+  facebook: FacebookLogo,
+  instagram: InstagramLogo,
 };
 export default function Icon({ name, size = 20, ...props }) {
+  if (/^uploads\/[a-f0-9]{32}\.svg$/.test(name || ""))
+    return (
+      <img
+        src={"./" + name}
+        width={size}
+        height={size}
+        alt=""
+        aria-hidden="true"
+        {...props}
+      />
+    );
   const I = icons[name] || MapPin;
   return <I size={size} weight="regular" aria-hidden="true" {...props} />;
 }

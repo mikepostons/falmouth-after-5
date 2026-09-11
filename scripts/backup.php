@@ -7,5 +7,6 @@ mkdir($target,0700,true);
 // VACUUM INTO produces a consistent snapshot even when the source is open.
 db()->exec('VACUUM INTO '.db()->quote($target.'/content.sqlite'));chmod($target.'/content.sqlite',0600);
 mkdir($target.'/uploads',0700);foreach(glob(publicDir().'/uploads/*') as $file)if(is_file($file))copy($file,$target.'/uploads/'.basename($file));
+mkdir($target.'/submission-images',0700);foreach(glob(dataDir().'/submission-images/*.webp') as $file)if(is_file($file)){copy($file,$target.'/submission-images/'.basename($file));chmod($target.'/submission-images/'.basename($file),0600);}
 file_put_contents($target.'/manifest.json',json_encode(['created_at'=>gmdate('c'),'demo'=>demo(),'schema'=>1,'includes'=>'database and uploaded media'],JSON_PRETTY_PRINT));
 echo "Backup created. Store it privately; it contains staff password hashes.\n";

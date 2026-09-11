@@ -1,5 +1,7 @@
 Options -Indexes
 DirectoryIndex index.php
+# This directory is the public document root; override the private repo rule.
+Require all granted
 <FilesMatch "^\.">
 Require all denied
 </FilesMatch>

@@ -10,3 +10,12 @@ public/uploads/*
 !public/uploads/.htaccess
 !public/uploads/.gitkeep
 public/build/
+
+# Database snapshots and downloaded backups must never enter source control.
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.zip
+fa5-backup*/
+backups/

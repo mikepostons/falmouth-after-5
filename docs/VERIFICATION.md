@@ -52,3 +52,28 @@ P1 geolocation, a dedicated share button and bulk date duplication remain deferr
 ## Release boundaries
 
 No production URL, hosting account or GA4 property has been configured. Host-specific HTTPS, private storage, URL routing and access checks remain deployment acceptance steps. Demo offers and coordinates are not approved live content. Falmouth BID needs to approve the next campaign dates, offers, terms, images and venue pins and nominate staff and maintenance owners before public launch.
+
+## Alternative map-first frontend (9 September 2026)
+
+`?experience=app` adds a separate full-viewport map interface; the default frontend and shared staff CMS remain available. Verified locally in the browser at desktop, 820 × 1180 tablet and 390 × 844 phone sizes: floating list/sidebar, mobile bottom sheet, category popover, Escape dismissal, combined Food + Shopping filters (9 demo offers), search for Penny (1 result), offer detail and directions. Mapbox rendered with the existing 48-degree pitch; the same map stays mounted when toggling the list. Category selection updates pins and list together. Production build, 7 JavaScript tests, 14 PHP domain/backup checks and `git diff --check` passed. This addition has not been deployed to the public website.
+
+### Map-first refinement
+
+Replaced the app logo with the supplied SVG; removed the filter heading, apply button, bottom-left count and separate info control. Map settings replace the categories inside the same popover. Browser checks confirmed 2D/3D controls, cluster expansion from zoom 14.8 to individual pins at zoom 19 while retaining the 48-degree pitch, direct single-offer opening, desktop right-third media placeholder and mobile top media section at 390 × 844. Uploaded images use the same area; demo venues without images display an explicit placeholder. Map idle redraw handles tile loading after camera changes. Existing tests and the production build passed.
+
+### Focus styling and location audit
+
+Replaced brown 3px outlines with compact 2px brand-blue focus rings, including both search layouts and staff colour choices. Filled controls retain a white separation ring for keyboard visibility. Browser checks confirmed the search ring and Tab focus on the popup directions link. All 15 local demo locations match `server/demo-locations.json`; all 9 supplied business images remain attached. Mangos directions retain the exact supplied coordinates. See `BUSINESS-LOCATIONS.md` for per-venue sources, Windjammer's unresolved entrance precision and The Orgia's trading-status question. Existing JavaScript and PHP domain/backup tests passed.
+
+### Split logo panel
+
+The map-first desktop brand panel now pairs the supplied logo on white with “Rediscover Falmouth After Dark” in self-hosted Yellowtail script on dark blue-grey, rotated -8 degrees. The desktop sidebar starts at 160px, leaving approximately 29px below the panel. Mobile hides the tagline and spaces the search below the logo. Browser screenshots checked the desktop composition, narrow desktop fit and 390 × 844 mobile layout. The font’s Apache licence is included in third-party notices.
+
+## Admin update — September 2026
+
+- Built frontend successfully; PHP syntax checks passed.
+- Eight JavaScript domain tests and PHP domain/backup checks passed, including new SVG rejection and custom hex colour cases.
+- HTTP integration suite passed for WebP uploads, SVG upload/category persistence, role enforcement, invitation rotation, single-use activation, account disable/session revocation, password changes, CSRF, throttling and private-data protection.
+- Business dropdown filtering and styled discard dialog verified in the app browser.
+- Business map visually inspected with the live Mapbox style. `node tests/map-picker.mjs` verified drag and click coordinate updates with a local Mapbox style to avoid external tile dependencies. All test edits were discarded. This local-only check requires installed Chrome and the local preview account.
+- Picker now starts centred on the business and avoids recreating the draggable marker on idle frames.

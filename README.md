@@ -14,6 +14,11 @@ npm run preview
 
 Open `http://127.0.0.1:8787/`. Staff area: `http://127.0.0.1:8787/?admin`.
 
+Two frontend options share the same API, offers and staff CMS:
+
+- Original webpage: `/` (unchanged default).
+- Map-first app: `/?experience=app`; add `&view=list` to open its floating offers panel. The app opens directly on the full-screen map, with a desktop/tablet sidebar and mobile bottom sheet. Filters open above the bottom controls. The logo button reveals campaign, privacy and original-version links. The filter menu switches to map settings for 2D/3D and reset. Clustered pins zoom in; coincident pins fan out at street scale. App offer details reserve the right third for imagery, moving it above the content on phones.
+
 Copy `.env.example` to `.env` when setting up a fresh checkout. For local demonstration set `APP_ENV=development` and `DEMO_MODE=true`. Put a public Mapbox token after `MAPBOX_PUBLIC_TOKEN=`. `.env` and `private/` are ignored by Git; secrets must never be committed. Public Mapbox tokens are necessarily visible to the browser.
 
 Run `php scripts/local-access.php` once in demo mode to generate a local staff account. Its credentials are written to `private/local-access.txt` and are not printed. That account and all sample content are absent from the production release.
