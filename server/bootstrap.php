@@ -271,3 +271,31 @@ function publicationVisibility(): array {
     }
     return ['next_campaign'=>null,'offer_count'=>0];
 }
+
+function siteSettings(): array { $s=record('settings','site') ?? ['version'=>0]; $s['gaIds']??=preg_match('/^G-[A-Z0-9]+$/',envv('GA_MEASUREMENT_ID'))?[envv('GA_MEASUREMENT_ID')]:[]; return $s; }
+function saveSiteSettings(array $input,array $user): array {
+    db()->exec('BEGIN IMMEDIATE');
+    try {
+        $old=siteSettings();
+        if((int)($input['version']??-1)!==(int)$old['version'])fail('Settings were changed by another user. Reload this page before saving.',409);
+        $out=[];
+        foreach(['informationTitle'=>120,'informationBody'=>5000,'informationGuide'=>3000,'organiser'=>300,'informationCredit'=>500,'campaignLabel'=>120,'offersTitle'=>120,'informationLabel'=>120,'informationSubtitle'=>200,'submissionTitle'=>120,'submissionSubtitle'=>200,'submissionIntro'=>1000,'cookieText'=>1000] as $key=>$limit) {
+            $value=$input[$key]??'';
+            if(!is_string($value)||mb_strlen($value)>$limit||preg_match('/[<>\x00-\x08\x0B\x0C\x0E-\x1F]/u',$value))fail('Enter plain text within the character limit for '.$key.'.');
+            $out[$key]=trim($value);
+        }
+        $out['gaIds']=$old['gaIds']??null;
+        if(array_key_exists('analyticsInput',$input)) {
+            if($user['role']!=='super-admin')fail('Only a super-admin can change analytics.',403);
+            $value=$input['analyticsInput'];
+            if(!is_string($value)||strlen($value)>20000)fail('Analytics input is too long.');
+            preg_match_all('/\bG-[A-Z0-9]{4,30}\b/',$value,$matches);
+            $ids=array_values(array_unique($matches[0]));
+            if(trim($value)!==''&&!$ids)fail('Enter a GA4 measurement ID (G-...) or a Google Analytics snippet containing one.');
+            if(count($ids)>5)fail('Use at most five measurement IDs.');
+            $out['gaIds']=$ids;
+        }
+        $saved=rawSave('settings',$out+['id'=>'site','version'=>$old['version']],$user['name']);
+        db()->exec('COMMIT');return $saved;
+    } catch(Throwable $e){db()->exec('ROLLBACK');throw $e;}
+}

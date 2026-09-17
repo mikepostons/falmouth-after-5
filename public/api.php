@@ -11,7 +11,8 @@ try {
     $action=$_GET['action']??'public';$method=$_SERVER['REQUEST_METHOD'];
     if($action==='public'&&$method==='GET'){
         $token=envv('MAPBOX_PUBLIC_TOKEN');
-        respond(publicContent()+['config'=>['mapboxToken'=>str_starts_with($token,'pk.')?$token:'','mapStyle'=>envv('MAPBOX_STYLE','mapbox://styles/mapbox/standard'),'gaId'=>preg_match('/^G-[A-Z0-9]+$/',envv('GA_MEASUREMENT_ID'))?envv('GA_MEASUREMENT_ID'):'']]);
+        $settings=siteSettings();
+        respond(publicContent()+['settings'=>array_diff_key($settings,array_flip(['updated_by','updated_at','id','version'])),'config'=>['mapboxToken'=>str_starts_with($token,'pk.')?$token:'','mapStyle'=>envv('MAPBOX_STYLE','mapbox://styles/mapbox/standard'),'gaIds'=>$settings['gaIds']??(preg_match('/^G-[A-Z0-9]+$/',envv('GA_MEASUREMENT_ID'))?[envv('GA_MEASUREMENT_ID')]:[]),'gaId'=>preg_match('/^G-[A-Z0-9]+$/',envv('GA_MEASUREMENT_ID'))?envv('GA_MEASUREMENT_ID'):'']]);
     }
     $https=($_SERVER['HTTPS']??'')==='on';
     if(envv('APP_ENV','production')==='production' && !$https)fail('Staff access requires HTTPS. Configure HTTPS at the web server.',403);
@@ -73,6 +74,8 @@ try {
         db()->prepare('DELETE FROM attempts WHERE key=?')->execute([$key]);session_regenerate_id(true);$_SESSION['user']=$u['id'];$_SESSION['sv']=$u['session_version'];$_SESSION['csrf']=bin2hex(random_bytes(32));respond(['ok'=>true]);
     }
     if(!$user)fail('Please sign in to continue.',401);
+    if($action==='settings'&&$method==='GET')respond(siteSettings());
+    if($action==='settings'&&$method==='POST')respond(saveSiteSettings($input,$user));
     if($action==='submission-image'&&$method==='GET') {
         $r=record('submissions',cleanText($_GET['id']??'',80));$slot=$_GET['slot']??'';
         if(!$r||!in_array($slot,['business','offer_details'],true))fail('Photo not found.',404);

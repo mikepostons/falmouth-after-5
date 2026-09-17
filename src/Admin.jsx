@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, createContext, useContext, Suspense, lazy } from "react";
 import { api } from "./api";
 import Icon from "./icons";
+import AdminSettings from "./AdminSettings";
 import AdminSelect from "./AdminSelect";
 import PhotoDropzone from "./PhotoDropzone";
 import SubmissionTable from "./SubmissionTable";
@@ -324,7 +325,7 @@ export default function Admin() {
       <main className="login-page">
         <a href="./">
           <img
-            src="./assets/logo-falmouth-after-5-blue.svg"
+            src="./assets/logo-falmouth-after-5-blue.svg?v=20260914"
             alt="Falmouth After Five"
           />
         </a>
@@ -395,7 +396,7 @@ export default function Admin() {
       <header className="admin-header">
         <a href="./">
           <img
-            src="./assets/logo-falmouth-after-5-blue.svg"
+            src="./assets/logo-falmouth-after-5-blue.svg?v=20260914"
             alt="Falmouth After Five"
           />
         </a>
@@ -429,7 +430,7 @@ export default function Admin() {
       <div className="admin-layout">
         <aside className="admin-sidebar">
           <p>Hello, {session.user.name}</p>
-          <nav aria-label="Campaign management">
+          <nav aria-label="Campaign management"><button className={tab === "settings" ? "active" : ""} onClick={() => setTab("settings")}><Icon name="settings" />Website settings</button>
             {session.user.role === "super-admin" && (
               <button onClick={() => setUsersOpen(true)}>
                 <Icon name="lock" />
@@ -472,7 +473,7 @@ export default function Admin() {
             </p>
           </div>
         </aside>
-        <main className="admin-main">
+        <main className="admin-main">{tab === "settings" ? <AdminSettings user={session.user} /> : <>
           <div className="admin-title">
             <div>
               <p className="eyebrow">YOUR FIRST FRIDAY TOOLKIT</p>
@@ -630,7 +631,7 @@ export default function Admin() {
             Published offers also need a published business and an applicable
             published campaign to appear on the website.
           </p>
-        </main>
+        </>}</main>
       </div>
       {usersOpen && <AdminUsers onClose={() => setUsersOpen(false)} />}
       {confirmClose && (

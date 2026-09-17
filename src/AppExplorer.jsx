@@ -1,3 +1,4 @@
+import {siteCopy} from "./site-copy";
 import React, { Suspense, useState, useRef, useEffect } from "react";
 import Icon from "./icons";
 import ExplorerMenu from "./ExplorerMenu";
@@ -28,29 +29,18 @@ export default function AppExplorer({
   error,
   load,
   onPrivacy,
+  onUsable,
 }) {
   const [introducing, setIntroducing] = useState(() => !new URLSearchParams(location.search).has("offer") && !matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [mapReady, setMapReady] = useState(false);
-  const [minimumElapsed, setMinimumElapsed] = useState(false);
-  const [mapSettled, setMapSettled] = useState(false);
-  const departing = introducing && minimumElapsed && mapSettled;
-  useEffect(() => {
-    if (!introducing) return;
-    const minimum = setTimeout(() => setMinimumElapsed(true), 6000);
-    // A failed map must never trap visitors behind the welcome screen.
-    const fallback = setTimeout(() => setMapSettled(true), 15000);
-    return () => { clearTimeout(minimum); clearTimeout(fallback); };
-  }, [introducing]);
-  useEffect(() => {
-    if (!mapReady) return;
-    const timer = setTimeout(() => setMapSettled(true), 1300);
-    return () => clearTimeout(timer);
-  }, [mapReady]);
+  const [loadingComplete, setLoadingComplete] = useState(false);
+  const departing = introducing && loadingComplete;
   useEffect(() => {
     if (!departing) return;
     const timer = setTimeout(() => setIntroducing(false), 1500);
     return () => clearTimeout(timer);
   }, [departing]);
+  useEffect(() => { if (!introducing) onUsable?.(); }, [introducing, onUsable]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSearch, setMobileSearch] = useState(false);
   const [isMobile, setIsMobile] = useState(
@@ -150,7 +140,7 @@ export default function AppExplorer({
   );
   return (
     <>
-    {introducing && <WelcomeSplash mapReady={mapReady} departing={departing} />}
+    {introducing && <WelcomeSplash mapReady={mapReady} departing={departing} onComplete={() => setLoadingComplete(true)} />}
     <main
       ref={explorerRoot}
       inert={introducing}
@@ -193,7 +183,7 @@ export default function AppExplorer({
             aria-label="About Falmouth After Five"
           >
             <img
-              src={isMobile ? "./assets/logo-falmouth-after-5-motif.svg" : "./assets/logo-falmouth-after-5-blue.svg"}
+              src="./assets/logo-falmouth-after-5-blue.svg?v=20260914"
               alt="Falmouth After Five"
             />
           </button>
@@ -439,7 +429,7 @@ export default function AppExplorer({
         aria-label="Offers and businesses"
       >
         <div className="app-panel-heading">
-          <h1><Icon name="ticket" size={26} /><span>Current offers</span></h1>
+          <h1><Icon name="ticket" size={26} /><span>{siteCopy(data).offersTitle}</span></h1>
           <div className="app-panel-actions">
             <span
               className={`app-offer-count ${searchActive ? "search-filtered" : ""}`}

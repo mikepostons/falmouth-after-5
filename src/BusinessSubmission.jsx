@@ -1,3 +1,4 @@
+import {siteCopy} from "./site-copy";
 import React, { useEffect, useRef, useState, Suspense } from 'react';
 import Icon from './icons';
 import PhotoDropzone from './PhotoDropzone';
@@ -69,7 +70,7 @@ export default function BusinessSubmission({ data, MapView, onClose, onDirty, on
   const check = (key,label) => <label className="submission-check"><input type="checkbox" name={key} checked={values[key]} onChange={e=>update(key,e.target.checked)}/><span>{label}</span></label>;
   if(sent)return <div className="submission-success" role="status"><Icon name="check" size={36}/><h2>Submission received</h2><p>Your business, offer and any photos have been sent to Falmouth BID for review. Nothing is published automatically.</p><button className="button primary" onClick={onClose}>Back to exploring</button></div>;
   return <form ref={form} className="business-submission submission-wizard" noValidate onSubmit={submit}>
-    <p>Tell us about your business and offer. Fields marked * are required. You can check everything before sending.</p>
+    <p>{siteCopy(data).submissionIntro}</p>
     <nav className="submission-steps" aria-label="Submission steps">{steps.map((name,i)=><button type="button" key={name} disabled={busy||processing||i>step} aria-current={step===i?'step':undefined} onClick={()=>{setErrors({});setStep(i);}}><span>{i+1}</span>{name}</button>)}</nav>
     <h2 ref={heading} tabIndex={-1}>Step {step+1} of 6 · {steps[step]}</h2>
     {(error||Object.keys(errors).length>0)&&<div className="submission-error-summary" role="alert">{error||'Please check the highlighted fields before continuing.'}</div>}

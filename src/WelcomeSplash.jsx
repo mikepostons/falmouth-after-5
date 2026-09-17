@@ -1,16 +1,15 @@
 import React from "react";
 import "./welcome-splash.css";
 
-export default function WelcomeSplash({ mapReady, departing }) {
+export default function WelcomeSplash({ mapReady, departing, onComplete }) {
   return (
     <div className={`welcome-splash ${mapReady ? "map-ready" : ""} ${departing ? "is-departing" : ""}`} aria-label="Welcome to Falmouth After Five">
       <div className="splash-logo" aria-hidden="true">
-        <img className="splash-wordmark" src="./assets/splash-wordmark.svg" alt="" />
         <div className="splash-circle">
-          <img src="./assets/splash-circle.svg" alt="" />
+          <img src="./assets/logo-falmouth-after-5-motif-new.svg" alt="" />
           <svg className="splash-dial" viewBox="0 0 120 120">
             <circle className="splash-dial-track" cx="60" cy="60" r="57" />
-            <circle className="splash-dial-progress" cx="60" cy="60" r="57" pathLength="1" />
+            <circle onAnimationEnd={onComplete} className="splash-dial-progress" cx="60" cy="60" r="57" pathLength="1" />
           </svg>
         </div>
       </div>

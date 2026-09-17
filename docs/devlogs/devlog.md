@@ -300,3 +300,38 @@ The deployed homepage and public API returned LiteSpeed 403 after the document r
 ### 11 September 2026 — Request table and recoverable deletion
 
 Business submissions now appear in a responsive, horizontally scrollable table with business/offer, contact, received date, status and actions. Requests are sorted newest received first; search includes contact names, emails and offer titles. View opens a details modal, including legacy requests, offer information and private photos. Delete requires a named confirmation and moves only that request to Trash; Restore reinstates its previous new/reviewed status. Private photos are retained for recovery and existing CMS business/offer records are untouched. API actions require staff login and CSRF, run transactionally, and prevent marking trashed requests reviewed. This is recoverable deletion, not permanent erasure; backups retain requests as before.
+
+
+## 14 September 2026 — Updated platform branding
+
+Replaced the full blue logo across the explorer, classic frontend and admin screens. Mobile now uses a smaller full blue logo. The intro uses the new motif within the circular progress meter; the sliding wordmark and sideways movement have been removed. The deployed motif SVG viewBox trims empty canvas so its circular artwork is centred in the dial; the supplied resource remains unchanged. Existing loading timing, map readiness and departure animation are retained. Production build passed and desktop/mobile branding was visually checked. Deploy `public/build/` plus the updated blue SVG and new motif SVG in `public/assets/`; no database or configuration changes are required.
+
+
+## 14 September 2026 — Intro timing and map credit menu
+
+The splash now begins closing on the loading ring animation-end event (three seconds), removing the previous minimum display and map-settle delays. Background transparency still waits for map readiness. Removed the mobile top gradient while retaining the bottom gradient. Public maps now display a styled credit card on right-click, with a new-tab link to 3deep Media; outside click, Escape, resize and scroll dismiss it. Business location pickers retain their normal behavior. Verified desktop card rendering, Escape dismissal and mobile gradient removal; production build passed. Deploy `public/build/` for these changes.
+
+
+## 14 September 2026 — Website settings and delayed cookie notice
+
+Added Website settings in the CMS (`src/AdminSettings.jsx`). Staff can edit public menu labels, organiser text, information copy, offers sidebar heading, submission heading/introduction and cookie notice. Blank copy falls back to `src/site-copy.js`; text is rendered as escaped plain text. Settings persist in the SQLite records table as kind `settings`, id `site`, so standard database backups include them. GET/POST `settings` require authentication; writes require CSRF and matching record version. API validation enforces lengths and rejects HTML/control characters. Public responses omit staff metadata.
+
+Super-admins can paste GA4 IDs or Google Analytics snippets. The server extracts at most five unique G- measurement IDs and discards all other code. Arbitrary script injection and GTM container snippets are deliberately unsupported. The frontend inserts the standard async Google loader into document.head only after analytics consent; tags are disabled in demo mode and the CMS. Existing GA_MEASUREMENT_ID remains a fallback until settings are saved. Clearing analytics in settings disables it. Consent withdrawal disables configured tags and reloads to unload them.
+
+The cookie notice appears after ten seconds in map view once the intro has finished, provided no previous preference exists. It offers essential-only/analytics choices when analytics is configured, or an informational acknowledgement otherwise. Privacy & cookies remains available from the menu. Existing preferences are respected. The map credit now keeps the developer name inline.
+
+Validation: production build and PHP lint passed; isolated HTTP integration tests passed including settings validation, CSRF, optimistic locking, safe snippet extraction, public metadata exclusion and admin/super-admin permissions. Browser verified the delayed public notice and absence of a loaded analytics tag. Deploy public/build/, public/api.php and server/bootstrap.php together. Do not upload local databases or .env.
+
+
+## 15 September 2026 — Initial Krystal production deployment
+
+Installed the current built frontend, PHP backend and client content at `/home/deepmedi/fal-after-5.falmouth.co.uk` on the authorised Krystal account. cPanel document root verified as the child `public/` directory. Imported an integrity-checked snapshot of the restored 11 September database as `private/content.sqlite`, preserving 23 businesses, 24 offers, seven campaigns, five categories, one submission and existing staff accounts. Copied public uploads and private submission images. Generated production-specific configuration privately; no secrets are documented here. Initial package retained privately on the account, plus a consistent backup under `/home/deepmedi/faf-backups/initial-production-20260915`.
+
+PHP 8.2 deployment checks pass after enabling fileinfo in the account selector; mysqli/mysqlnd/pdo_mysql remained available. Domain-specific selector command was unsupported, so the supported account selector was used. HTTP origin checks with an explicit hostname-to-IP override return 200 and production public content (17 businesses/offers, six published dates); all 17 referenced public images returned 200. `.env` and uploads .htaccess return 403; private database and server script URLs return 404. No DNS records were changed.
+
+Pending external cutover: public DNS A record for fal-after-5 must point to 77.72.2.42. Current A/AAAA/CNAME lookups returned no results. AutoSSL check requested successfully but validation reported missing public address resolution; direct HTTPS testing reports no matching hostname certificate. After DNS update, run AutoSSL again and complete HTTPS, browser/map, staff login and upload verification before treating launch as complete. Future deployments must preserve private data, .env and public/uploads.
+
+
+## 17 September 2026 — Social sharing image
+
+Added the approved map-based share image in public/assets/falmouth-after-five-social-map.png and server-rendered Open Graph/Twitter card metadata in index.html. Uses absolute production URLs and explicit image dimensions (1733×908); crawlers do not need to execute React. Deploy the new asset and rebuilt public/build/index.html only. No client data or settings replacement.

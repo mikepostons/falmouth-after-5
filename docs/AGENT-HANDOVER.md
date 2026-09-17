@@ -111,3 +111,13 @@ Append dated entries to `docs/devlogs/devlog.md` for material changes. Record th
 ### Public submission wizard (10 September 2026)
 
 `BusinessSubmission.jsx` is a six-step public form mounted from `ExplorerMenu.jsx`, with MapView picker and local image preparation in `submission-image.js`. It submits JSON (`data`) and up to two WebP files in one multipart request; no public staging upload endpoint exists. Server `validateSubmission` constructs allowed business/offer fields, with public-only 500/250 description limits. `submit-business` retains CSRF, adds attempt throttling, validates/re-encodes images and stores them in `dataDir()/submission-images/` outside the public root. The staff-only `submission-image` route resolves the record and slot instead of accepting file paths. `SubmissionDetails.jsx` presents complete submissions and photo downloads in admin; reviewed status still does not create or publish records. Backup/restore now includes private photos. Old stored submissions remain readable; the former minimal incoming submission payload is superseded. `tests/submission-ui.mjs` exercises the local mobile form with a mocked submission response and never saves content. HTTP tests use an isolated database for security/upload checks.
+
+
+### Website settings (14 September 2026)
+
+`src/AdminSettings.jsx` and `src/site-copy.js` manage editable public copy; authenticated `settings` API persists to the SQLite settings/site record. Only super-admins may change GA4 configuration. Pasted snippets are reduced to validated measurement IDs, never executed verbatim. `main.jsx` loads Google tags in head only with consent outside demo/admin, and shows the notice after ten seconds of map view after intro. See the devlog for deployment and validation details.
+
+
+### Krystal deployment (15 September 2026)
+
+Initial production app and client data installed at `/home/deepmedi/fal-after-5.falmouth.co.uk`; public document root is its `public/` child. SSH connection uses the user-authorised local key, account deepmedi, host 77.72.2.42, port 722. No secrets in docs. Production storage is private/content.sqlite. Do not repeat the initial data upload for code updates. HTTP origin checks pass; DNS and valid HTTPS certificate are still pending. See latest devlog entry before continuing cutover.

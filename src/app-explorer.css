@@ -1212,7 +1212,7 @@ dialog.explorer-menu { position: fixed; inset: 0 0 0 auto; margin: 0; width: min
   .app-header .app-brand, .is-map .app-header .app-brand, .app-header .brand-button, .is-map .app-header .brand-button { background: transparent; box-shadow: none; padding: 0; }
   .app-header { z-index: 5; }
   .app-explorer::before, .app-explorer::after { content: ""; position: absolute; left: 0; right: 0; z-index: 1; pointer-events: none; }
-  .app-explorer::before { top: 0; height: 160px; background: linear-gradient(to bottom, #091e3999, transparent); }
+  .app-explorer::before { display: none; }
   .app-explorer::after { bottom: 0; height: 150px; background: linear-gradient(to top, #091e3999, transparent); }
   .is-list .app-offers { z-index: 2; padding-top: calc(96px + env(safe-area-inset-top)); }
   .app-dock > .app-view-switch { display: flex; border-radius: 999px; }
@@ -1324,3 +1324,8 @@ dialog.explorer-menu { position: fixed; inset: 0 0 0 auto; margin: 0; width: min
   color: #fff;
 }
 .app-menu-trigger.icon-button:hover { background: #167db7; border-color: #167db7; }
+
+/* September branding: full blue logo at both breakpoints. */
+@media (max-width: 760px) {
+  .app-header .app-brand img { width: 112px; height: auto; max-height: none; margin-top: 0; object-fit: contain; }
+}

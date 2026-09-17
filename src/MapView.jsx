@@ -35,6 +35,26 @@ export default function MapView({
   latest.current = { businesses, offers, categories, onSelect, picker, onPick };
   const [state, setState] = useState("loading"),
     [tilted, setTilted] = useState(true);
+  const [contextMenu, setContextMenu] = useState(null);
+  const contextRef = useRef(null);
+  useEffect(() => {
+    if (!contextMenu) return;
+    const dismiss = (event) => {
+      if (!contextRef.current?.contains(event.target)) setContextMenu(null);
+    };
+    const onKey = (event) => { if (event.key === "Escape") setContextMenu(null); };
+    const close = () => setContextMenu(null);
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", close);
+    window.addEventListener("scroll", close, true);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", close);
+      window.removeEventListener("scroll", close, true);
+    };
+  }, [contextMenu]);
   const redraw = useRef(() => {});
   useEffect(() => {
     let cancelled = false,
@@ -396,12 +416,29 @@ export default function MapView({
       <div
         ref={el}
         className="map-canvas"
+        onContextMenu={picker ? undefined : (event) => {
+          event.preventDefault();
+          const bounds = event.currentTarget.getBoundingClientRect();
+          setContextMenu({
+            left: Math.max(12, Math.min(event.clientX - bounds.left, bounds.width - 292)),
+            top: Math.max(12, Math.min(event.clientY - bounds.top, bounds.height - 172)),
+          });
+        }}
         aria-label={
           picker
             ? "Set the business location"
             : "Map of participating Falmouth businesses"
         }
       />
+      {contextMenu && !picker && (
+        <aside ref={contextRef} className="map-credit-menu" style={contextMenu} aria-label="Mapping tool credit">
+          <p>Interactive mapping tool developed by <strong>3deep Media</strong></p>
+          <a href="https://3deepmedia.com/" target="_blank" rel="noopener noreferrer" onClick={() => setContextMenu(null)}>
+            Visit 3deep Media <span aria-hidden="true">↗</span>
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </aside>
+      )}
       {state !== "ready" && (
         <div className="map-status">
           <Icon name="map" size={42} />

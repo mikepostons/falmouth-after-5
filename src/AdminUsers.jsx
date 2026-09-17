@@ -8,7 +8,7 @@ export function AccountActivation() {
   return (
     <main className="login-page">
       <img
-        src="./assets/logo-falmouth-after-5-blue.svg"
+        src="./assets/logo-falmouth-after-5-blue.svg?v=20260914"
         width="180"
         alt="Falmouth After Five"
       />

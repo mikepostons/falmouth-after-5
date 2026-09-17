@@ -1,3 +1,4 @@
+import {siteCopy} from "./site-copy";
 import React, {
   useEffect,
   useMemo,
@@ -459,6 +460,8 @@ function App() {
     [consent, setConsent] = useState(
       () => localStorage.getItem("faf-analytics") || "",
     );
+  const [mapUsable, setMapUsable] = useState(false);
+  const [cookieDue, setCookieDue] = useState(false);
   const isAdmin = new URLSearchParams(location.search).has("admin");
   const initial = useRef(true),
     clockOffset = useRef(0);
@@ -497,35 +500,40 @@ function App() {
     }, 30000);
     return () => clearInterval(timer);
   }, []);
+  const analyticsIds = data?.config.gaIds || (data?.config.gaId ? [data.config.gaId] : []);
+  const analyticsKey = analyticsIds.join(",");
   useEffect(() => {
-    if (!data?.config.gaId || consent !== "yes" || isAdmin || data.demo) return;
+    if (isAdmin || !data || consent || cookieDue || view !== "map" || (appExperience && !mapUsable)) return;
+    const timer = setTimeout(() => setCookieDue(true), 10000);
+    return () => clearTimeout(timer);
+  }, [isAdmin, !!data, consent, cookieDue, view, mapUsable]);
+  useEffect(() => {
+    if (!analyticsIds.length || consent !== "yes" || isAdmin || data?.demo) return;
     window.dataLayer = window.dataLayer || [];
-    window.gtag =
-      window.gtag ||
-      function () {
-        window.dataLayer.push(arguments);
-      };
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    window.gtag("consent", "update", {analytics_storage:"granted",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied"});
     if (!document.getElementById("faf-ga")) {
-      const s = document.createElement("script");
-      s.id = "faf-ga";
-      s.async = true;
-      s.src = `https://www.googletagmanager.com/gtag/js?id=${data.config.gaId}`;
-      document.head.appendChild(s);
-      window.gtag("js", new Date());
-      window.gtag("config", data.config.gaId, { send_page_view: true });
+      const s=document.createElement("script");s.id="faf-ga";s.async=true;
+      s.src=`https://www.googletagmanager.com/gtag/js?id=${analyticsIds[0]}`;
+      document.head.appendChild(s);window.gtag("js",new Date());
     }
-    window["ga-disable-" + data.config.gaId] = false;
-  }, [data?.config.gaId, consent]);
+    for (const id of analyticsIds) {
+      window["ga-disable-"+id]=false;
+      window.gtag("config",id,{send_page_view:true});
+    }
+    return () => { for (const id of analyticsIds) window["ga-disable-"+id]=true; };
+  }, [analyticsKey, consent, isAdmin, data?.demo]);
   const track = (event, params = {}) => {
-    if (consent === "yes" && data?.config.gaId && !data.demo)
-      window.gtag?.("event", event, { ...params, campaign_date: date });
+    if (consent === "yes" && analyticsIds.length && !data.demo)
+      window.gtag?.("event",event,{...params,campaign_date:date});
   };
   const chooseConsent = (value) => {
-    localStorage.setItem("faf-analytics", value);
+    localStorage.setItem("faf-analytics",value);
     setConsent(value);
-    if (data?.config.gaId)
-      window["ga-disable-" + data.config.gaId] = value !== "yes";
+    for (const id of analyticsIds) window["ga-disable-"+id]=value!=="yes";
     setPrivacy(false);
+    // Reload on withdrawal to fully unload tags already loaded in this document.
+    if(value!=="yes" && document.getElementById("faf-ga")) location.reload();
   };
   useEffect(() => {
     if (isAdmin || initial.current) return;
@@ -580,10 +588,10 @@ function App() {
         <picture>
           <source
             media="(max-width: 760px)"
-            srcSet="./assets/logo-falmouth-after-5-motif.svg"
+            srcSet="./assets/logo-falmouth-after-5-blue.svg?v=20260914"
           />
           <img
-            src="./assets/logo-falmouth-after-5-blue.svg"
+            src="./assets/logo-falmouth-after-5-blue.svg?v=20260914"
             alt="Falmouth After Five"
           />
         </picture>
@@ -622,6 +630,7 @@ function App() {
           track={track}
           error={error}
           load={load}
+          onUsable={() => setMapUsable(true)}
           onPrivacy={() => setPrivacy(true)}
         />
       ) : (
@@ -641,10 +650,10 @@ function App() {
               <picture>
                 <source
                   media="(max-width: 760px)"
-                  srcSet="./assets/logo-falmouth-after-5-motif.svg"
+                  srcSet="./assets/logo-falmouth-after-5-blue.svg?v=20260914"
                 />
                 <img
-                  src="./assets/logo-falmouth-after-5-blue.svg"
+                  src="./assets/logo-falmouth-after-5-blue.svg?v=20260914"
                   alt="Falmouth After Five"
                 />
               </picture>
@@ -1138,20 +1147,15 @@ function App() {
           </div>
         </Dialog>
       )}
-      {data.config.gaId && !consent && !data.demo && (
+      {cookieDue && !consent && !privacy && (
         <aside className="consent-banner" aria-label="Analytics preference">
-          <p>Help us improve your next evening out? Allow usage analytics.</p>
-          <button
-            className="button small primary"
-            onClick={() => chooseConsent("yes")}
-          >
-            Allow analytics
-          </button>
+          <p>{data.settings?.cookieText || (analyticsIds.length ? siteCopy(data).cookieText : "We use essential cookies for staff sign-in and business submissions. The interactive map connects to Mapbox. You can review our privacy information at any time.")} <button className="text-link" onClick={() => setPrivacy(true)}>Privacy & cookies</button></p>
+          {analyticsIds.length > 0 && <button className="button small primary" onClick={() => chooseConsent("yes")}>Allow analytics</button>}
           <button
             className="button small secondary"
             onClick={() => chooseConsent("no")}
           >
-            Essential only
+            {analyticsIds.length ? "Essential only" : "Got it"}
           </button>
         </aside>
       )}

@@ -163,6 +163,7 @@ try {
   r = await call("admin");
   assert.equal(r.status, 200);
   pass("Staff sign-in and authenticated CMS access");
+
   assert.equal(r.data.submissions.length, 5);
   const withPhotos=r.data.submissions.find(s=>s.business?.image);
   assert.equal(withPhotos.business.description,submission.description);
@@ -385,6 +386,20 @@ try {
   await call("login", { email: "test@example.test", password });
   await call("session");
   assert.equal((await call("users")).status, 200);
+  const initialSettings=(await call('settings')).data;
+  assert.equal((await call('settings',{...initialSettings,informationTitle:'<script>alert(1)</script>'})).status,422);
+  assert.equal((await call('settings',{...initialSettings,analyticsInput:'G-TEST1234'},{token:'bad'})).status,403);
+  const savedSettings=await call('settings',{...initialSettings,informationTitle:'Explore Falmouth',analyticsInput:'<script async src="https://www.googletagmanager.com/gtag/js?id=G-TEST1234"></script><script>alert("ignored")</script>'});
+  assert.equal(savedSettings.status,200);
+  assert.deepEqual(savedSettings.data.gaIds,['G-TEST1234']);
+  assert.equal(savedSettings.data.analyticsInput,undefined);
+  const publicSettings=(await call('public')).data;
+  assert.equal(publicSettings.settings.informationTitle,'Explore Falmouth');
+  assert.equal(publicSettings.settings.updated_by,undefined);
+  assert.deepEqual(publicSettings.config.gaIds,['G-TEST1234']);
+  assert.equal((await call('settings',{...initialSettings,informationTitle:'Stale'})).status,409);
+  pass('Settings validate plain text, require CSRF, extract only GA IDs and reject stale saves');
+
   const invited = await call("invite-user", {
     email: "invited@example.test",
     name: "Invited editor",
@@ -416,6 +431,12 @@ try {
   await call("login", { email: "invited@example.test", password });
   await call("session");
   const invitedCookie = cookie;
+  const editorSettings=(await call('settings')).data;
+  assert.equal((await call('settings',{...editorSettings,analyticsInput:'G-OTHER1234'})).status,403);
+  assert.equal((await call('settings',{...editorSettings,offersTitle:'Latest offers'})).status,200);
+  assert.deepEqual((await call('settings')).data.gaIds,['G-TEST1234']);
+  pass('Ordinary admins can edit copy but cannot change analytics');
+
   assert.equal((await call("users")).status, 403);
   // Re-authenticate the super-admin, then disable the invited user's active session.
   await call("logout", {});
