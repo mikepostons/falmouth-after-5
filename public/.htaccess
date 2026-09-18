@@ -5,3 +5,15 @@ Require all granted
 <FilesMatch "^\.">
 Require all denied
 </FilesMatch>
+
+# Canonical production HTTPS, including visitor HTTP forwarded by Cloudflare.
+# Fixed hostname avoids redirecting local previews or trusting a supplied Host.
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^fal-after-5\.falmouth\.co\.uk(?::[0-9]+)?$ [NC]
+RewriteCond %{HTTP:CF-Visitor} http[^s]
+RewriteRule ^ https://fal-after-5.falmouth.co.uk%{REQUEST_URI} [R=301,L,NE]
+
+RewriteCond %{HTTP_HOST} ^fal-after-5\.falmouth\.co\.uk(?::[0-9]+)?$ [NC]
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:CF-Visitor} !https
+RewriteRule ^ https://fal-after-5.falmouth.co.uk%{REQUEST_URI} [R=301,L,NE]
