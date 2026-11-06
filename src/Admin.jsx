@@ -825,7 +825,7 @@ export default function Admin() {
                       </p>
                     </div>
                     <Suspense fallback={<p>Loading map…</p>}>
-                      <MapView
+                      {editorTab === "location" && <MapView
                         picker
                         config={config}
                         businesses={[
@@ -842,7 +842,7 @@ export default function Admin() {
                           update("lat", Number(p.lat.toFixed(6)));
                           update("lng", Number(p.lng.toFixed(6)));
                         }}
-                      />
+                      />}
                     </Suspense>
                   </section>
                   <section

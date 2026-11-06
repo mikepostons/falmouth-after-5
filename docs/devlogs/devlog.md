@@ -335,3 +335,10 @@ Pending external cutover: public DNS A record for fal-after-5 must point to 77.7
 ## 17 September 2026 — Social sharing image
 
 Added the approved map-based share image in public/assets/falmouth-after-five-social-map.png and server-rendered Open Graph/Twitter card metadata in index.html. Uses absolute production URLs and explicit image dimensions (1733×908); crawlers do not need to execute React. Deploy the new asset and rebuilt public/build/index.html only. No client data or settings replacement.
+
+
+## 6 November 2026 — admin map picker repair
+
+Mapbox Standard tile requests returned 403 without a Referer, but accepted the production origin (204 for the tested empty tile). The admin entry point used no-referrer while the public map sent its origin. Changed admin to strict-origin: Mapbox receives the scheme and host, without admin paths, queries or activation/reset tokens. The Location tab now mounts its map only while visible, and failed pickers offer a Retry map button and manual-coordinate guidance. Public map styling and production content are unchanged.
+
+Validation: production token style request succeeds; failing tile compared with/without production origin; npm test and production build; PHP syntax check. Deployment requires the existing SSH private key to be unlocked locally. Work prepared in a temporary GitHub checkout because the Dropbox checkout was unavailable.

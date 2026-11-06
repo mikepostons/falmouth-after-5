@@ -35,6 +35,7 @@ export default function MapView({
   latest.current = { businesses, offers, categories, onSelect, picker, onPick };
   const [state, setState] = useState("loading"),
     [tilted, setTilted] = useState(true);
+  const [retry, setRetry] = useState(0);
   const [contextMenu, setContextMenu] = useState(null);
   const contextRef = useRef(null);
   useEffect(() => {
@@ -373,6 +374,7 @@ export default function MapView({
         if (!cancelled) setState("unavailable");
       }
     }
+    setState("loading");
     init();
     return () => {
       cancelled = true;
@@ -387,7 +389,7 @@ export default function MapView({
       mapRef.current = null;
       onControls?.(null);
     };
-  }, [config?.mapboxToken, config?.mapStyle, picker]);
+  }, [config?.mapboxToken, config?.mapStyle, picker, retry]);
   const markerSignature = JSON.stringify({
     businesses: businesses.map(({ id, name, lat, lng, image }) => ({
       id,
@@ -449,9 +451,12 @@ export default function MapView({
           </h3>
           <p>
             {state === "loading"
-              ? "Your offers are ready to browse."
-              : "You can still explore every offer in the list and open directions from its details."}
+              ? (picker ? "Loading the location picker…" : "Your offers are ready to browse.")
+              : (picker ? "Try loading the map again, or enter the latitude and longitude manually." : "You can still explore every offer in the list and open directions from its details.")}
           </p>
+          {picker && state === "unavailable" && (
+            <button type="button" className="button" onClick={() => setRetry((value) => value + 1)}>Retry map</button>
+          )}
         </div>
       )}
       {state === "ready" && !picker && !hideTools && (

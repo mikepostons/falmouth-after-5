@@ -1,6 +1,7 @@
 <?php
 header('X-Content-Type-Options: nosniff');
-header('Referrer-Policy: '.(isset($_GET['admin'])?'no-referrer':'strict-origin-when-cross-origin'));
+// Mapbox requires the allowed site origin; never send admin paths or reset tokens.
+header('Referrer-Policy: '.(isset($_GET['admin'])?'strict-origin':'strict-origin-when-cross-origin'));
 header('X-Frame-Options: SAMEORIGIN');
 header('Cache-Control: no-cache');
 $file=__DIR__.'/build/index.html';
